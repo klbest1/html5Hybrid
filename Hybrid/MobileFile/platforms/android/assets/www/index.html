@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+<head>
+    <!--
+    Customize this policy to fit your own app's needs. For more guidance, see:
+        https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+    Some notes:
+        * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+        * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+        * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+            * Enable inline JS: add 'unsafe-inline' to default-src
+    -->
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport"
+          content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="font/css/fontello.css">
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+
+    <script type="text/javascript" src="js/jquery-3.2.0.js"></script>
+    <script type="text/javascript" src="js/lokijs.js"></script>
+    <script type="text/javascript" src="js/iscroll.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/file_dealer.js"></script>
+    <script type="text/javascript" src="js/html_dealer.js"></script>
+    <script type="text/javascript" src="js/htmlUtil.js"></script>
+    <script type="text/javascript" src="js/device_dealer.js"></script>
+    <script type="text/javascript" src="js/constant.js"></script>
+    <script type="text/javascript" src="js/localdata_manger.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+</head>
+<body>
+<div class="head headSkin">
+    <h2 class="title title-skin">我的文件</h2>
+</div>
+
+<div class="content contentSkin">
+    <div class="nav navSkin">
+        <div class="currentPath currentPathSkin">
+            <!-笔记span-组合行内元素-->
+            当前目录:<span></span>
+        </div>
+        <div class="upper upperSkin">上一级</div>
+    </div>
+    <div class="listContainer" id="listContainerId">
+        <ul class="list" id="listID">
+            <li class="templete" >
+                <div class="icon-check-common icon-check-empty "></div>
+                <div class="icon iconSkin"></div>
+                <div class="label labelSkin">This is a floder</div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="operator operatorSkin" id="operatorCreateFile">
+        <a id="myFile" class="bottomLabelCommon bottomLabelCommonSKin icon-folder">我的文件</a>
+        <a id="safeBox" class="bottomLabelCommon bottomLabelCommonSKin icon-lock-filled">保险柜</a>
+
+    </div>
+
+    <div class="operator operatorSkin operatorEdit" id="operatorEdit">
+        <a id="createFile" class="bottomLabelCommon bottomLabelCommonSKin icon-plus">新建文件</a>
+        <a id="moveFile" class="bottomLabelCommon bottomLabelCommonSKin icon-move">移动</a>
+        <a id="duplicateFile" class="bottomLabelCommon bottomLabelCommonSKin icon-docs">复制</a>
+        <a id="deleteFile" class="bottomLabelCommon bottomLabelCommonSKin icon-trash-empty">删除</a>
+    </div>
+
+    <div class="operator operatorSkin operator-consult" id="operatorConsult">
+        <a id="operator-confirm" class="bottomLabelCommon bottomLabelCommonSKin icon-ok">确定</a>
+        <a id="operator-cancel" class="bottomLabelCommon bottomLabelCommonSKin icon-cancel">取消</a>
+    </div>
+</div>
+
+<!--创建文件对话框部分-->
+<div id = "dialogView" class="dialogOverlay dialogOverlaySkin">
+    <div class="dialog dialogSKin">
+        <div class="dialogTitle"></div>
+        <div class="dialogContent dialogContentSkin">
+            <input  id="fileName" class="input inputSkin" type="text" placeholder="输入文件名">
+        </div>
+        <div class="buttons">
+            <button  id="confirmButton" class="confirmButton buttonCommon buttonCommonSkin">创建文件夹</button>
+            <button id="cancelButton" class="cancelButton buttonCommon buttonCommonSkin">取消</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

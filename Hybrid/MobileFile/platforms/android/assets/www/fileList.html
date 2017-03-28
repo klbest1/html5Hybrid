@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport"
+          content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="font/css/fontello.css">
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/file_list.css">
+
+    <script type="text/javascript" src="js/jquery-3.2.0.js"></script>
+    <script type="text/javascript" src="js/lokijs.js"></script>
+    <script type="text/javascript" src="js/iscroll.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/file_dealer.js"></script>
+    <script type="text/javascript" src="js/html_dealer.js"></script>
+    <script type="text/javascript" src="js/htmlUtil.js"></script>
+    <script type="text/javascript" src="js/device_dealer.js"></script>
+    <script type="text/javascript" src="js/localdata_manger.js"></script>
+    <script type="text/javascript" src="js/constant.js"></script>
+    <script type="text/javascript" src="js/file_list.js"></script>
+</head>
+<body>
+<div class="head headSkin">
+    <!--/**为毛点不中????????**/ 经过20分钟的纠结,突然灵感一现,那是被覆盖了-->
+    <a class="bar-left-item icon-left-big bar-left-item-skin" id="bar-left-itemoneID"></a>
+    <h2 class="middle-title title-skin">选择目标</h2>
+    <a class="bar-right-item bar-right-item-skin" id="bar-right-itemoneID">确定</a>
+</div>
+
+<div class="content contentSkin">
+    <div class="nav navSkin">
+        <div class="currentPath currentPathSkin">
+            <!-笔记span-组合行内元素-->
+            当前目录:<span></span>
+        </div>
+        <div class="upper upperSkin">上一级</div>
+    </div>
+    <div class="listContainer" id="listContainerId">
+        <ul class="list" id="listID">
+            <li class="templete">
+                <div class="icon-check-common icon-check-common-skin icon-check-empty "></div>
+                <div class="icon iconSkin"></div>
+                <div class="label labelSkin">This is a floder</div>
+            </li>
+        </ul>
+    </div>
+
+</div>
+</body>
+</html>

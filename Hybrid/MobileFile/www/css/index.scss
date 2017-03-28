@@ -1,0 +1,338 @@
+$headHight: 64px;
+$iconWidth: 4rem;
+$naviHight: 40px;
+$listItemHight: 6rem;
+$iconLeft: 2rem;
+$iconTop: ($listItemHight - $iconWidth)/2;
+$labelLeft: $iconLeft + $iconWidth + 2rem;
+$labelWidth: 15rem;
+$operatorHight: 60px;
+
+html, body {
+  -webkit-user-select: none;
+  margin: 0;
+  padding: 0;
+}
+
+.head {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: $headHight;
+  line-height: $headHight;
+}
+
+/*命名规范笔记,笔记:内容会把父节点撑大,如果没有对父节点设置大小*/
+.headSkin {
+  background: orange;
+  color: white;
+  text-align: center;
+  font-size: large;
+}
+
+.content {
+  position: absolute;
+  top: $headHight;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.contentSkin {
+  background: blanchedalmond;
+}
+
+.nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: $naviHight;
+}
+
+.currentPath {
+  line-height: $naviHight;
+  position: absolute;
+  left: 20px;
+  height: $naviHight;
+}
+
+.currentPathSkin {
+  font-size: 2rem;
+  color: dodgerblue;
+}
+
+//float 和 absolute 区别:float 布局,postion 定位
+.upper {
+  position: absolute;
+  right: 20px;
+  height: $naviHight;
+  line-height: $naviHight;
+}
+
+.upperSkin {
+  font-size: 2rem;
+  color: dodgerblue;
+}
+
+.upperSkin:active {
+  color: lightblue;
+}
+
+.upperSkin {
+
+}
+
+.navSkin {
+  background: rosybrown;
+}
+
+/**********列表******/
+ul, li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.listContainer {
+  position: absolute;
+  top: $naviHight;
+  left: 0;
+  right: 0;
+  bottom: $operatorHight;
+  overflow: hidden;
+}
+
+.templete {
+  display: none;
+}
+
+.listItem {
+  height: $listItemHight;
+  position: relative;
+}
+
+.listItemSkin {
+  background: white;
+  border: solid 1px lavender;
+}
+
+.listItemSkin:active {
+  background: lightgray;
+}
+
+//笔记:relative 不设置高宽,默认全屏
+.icon-check-common, .icon-check-common:before {
+  display: inline-block;
+  vertical-align: middle;
+  width: 4rem;
+  font-size: 4rem;
+}
+
+.icon-check-common {
+  vertical-align: middle;
+  margin-left: 2rem;
+}
+
+.icon {
+  position: relative;
+  margin-left: 2rem;
+  width: $iconWidth;
+  height: $listItemHight;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.directory {
+  background: url("../img/folder.png") no-repeat center;
+  background-size: $iconWidth;
+}
+
+.file {
+  background: url("../img/file.png") no-repeat center;
+  background-size: $iconWidth;
+}
+
+.label {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  line-height: $listItemHight;
+  height: $listItemHight;
+  margin-left: 1rem;
+}
+
+.labelSkin {
+  color: black;
+  font-size: medium;
+}
+
+.icon-check-empty {
+
+}
+
+/****操作栏***/
+.operator {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: $operatorHight;
+  display: flex;
+}
+
+.operatorSkin {
+  background: ghostwhite;
+}
+
+.operatorEdit{
+  bottom: -$operatorHight;
+}
+
+.bottomLabelCommon {
+  height: $operatorHight;
+  flex: 1;
+  text-align: center;
+}
+
+.bottomLabelCommonSKin {
+  font-size: 2rem;
+}
+
+.bottomLabelCommonSKin:active, .bottomLabelCommonSKin:before:active {
+  background: lightgray;
+}
+
+.bottomLabelCommonSKin:before {
+  display: block;
+  height: 2.5rem;
+}
+
+.icon-plus:before {
+  font-size: 3rem;
+}
+
+//操作栏动画
+.operatorMoveIn{
+  animation: operatorMovIn 0.4s;
+  bottom: 0;
+}
+
+.operatorMoveOut{
+  animation: operatorMovOut 0.4s;
+  bottom: -$operatorHight;
+}
+
+
+//确定,与取消
+.operator-consult{
+  bottom: -$operatorHight;
+  transition: -webkit-transform 0.3s ease-in;
+  transform: translateY(0) translateZ(0);
+}
+
+.operator-consult-up{
+  transform: translateY(-$operatorHight) translateZ(0);
+}
+
+/***好奇怪动画跑到顶上去了,为什么????
+***笔记 草果然引用到另外一个文件的CSS了
+**/
+@keyframes operatorMovIn {
+  0% {
+    bottom: -$operatorHight;
+  }
+  100% {
+    bottom: 0;
+  }
+}
+
+@keyframes operatorMovOut {
+  0% {
+    bottom: 0;
+  }
+  100% {
+    bottom: -$operatorHight;
+  }
+}
+/****对话框部分CSS*/
+.dialogOverlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.dialogOverlaySkin {
+  background: rgba(0, 0, 0, 0.8);
+  display: none;
+}
+
+$dialogHeight: 200px;
+$dialogContentTop: 40px;
+$dialogContentHeight: 100px;
+$dialogButtonsHeight: $dialogHeight - $dialogContentTop - $dialogContentHeight;
+
+.dialog {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: $dialogHeight;
+}
+
+.dialogSKin {
+  background: #efefef;
+}
+
+.dialogContent {
+  position: absolute;
+  top: $dialogContentTop;
+  left: 0;
+  right: 0;
+  height: $dialogContentHeight;
+  padding: 0 24px 0 20px;
+}
+
+.dialogContentSkin {
+  text-align: center;
+}
+
+.dialogContent .input {
+  width: 100%;
+  height: 50px;
+}
+
+.dialogContent .inputSkin {
+  font-size: 2rem;
+}
+
+.buttons {
+  position: absolute;
+  display: flex;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: $dialogButtonsHeight;
+}
+
+.buttonCommon {
+  flex: 1;
+  height: 40px;
+  margin: 0 20px 0 20px;
+  line-height: 40px;
+}
+
+.buttonCommonSkin {
+  //border:  1px solid #ddd;
+  color: #666;
+  //background: lightgray;
+  //border-radius: 5px;
+  font-size: large;
+  text-align: center;
+  outline: none;
+}
+
+

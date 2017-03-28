@@ -1,0 +1,43 @@
+@charset "UTF-8";
+.listContainer {
+  bottom: 0; }
+
+/* *********导航栏*/
+.bar-left-item {
+  position: absolute;
+  left: 0;
+  width: 70px;
+  text-align: center; }
+
+/*笔记:只需要对before 只能设置字体大小,父容器设置盒子大小,让其居中,设置LineHeight和高度一样高*/
+.bar-left-item-skin:before {
+  font-size: 30px;
+  color: dodgerblue; }
+
+.bar-left-item:before:active {
+  color: lightblue; }
+
+.middle-title {
+  position: relative;
+  display: inline-block;
+  line-height: 64px;
+  height: 64px;
+  text-align: center;
+  margin: 0; }
+
+.bar-right-item {
+  position: absolute;
+  right: 0;
+  width: 80px; }
+
+.bar-right-item-skin {
+  font-size: 25px; }
+
+.bar-right-item-skin:active {
+  color: lightgray; }
+
+/*-----------*/
+.icon-check-common-skin:before {
+  color: lawngreen; }
+
+/*# sourceMappingURL=file_list.css.map */
