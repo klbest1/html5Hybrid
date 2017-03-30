@@ -164,6 +164,34 @@ module.exports = [
         "clobbers": [
             "window.plugins.nativepagetransitions"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-zip/zip.js",
+        "id": "cordova-plugin-zip.Zip",
+        "clobbers": [
+            "zip"
+        ]
+    },
+    {
+        "file": "plugins/cordova-safe/www/disusered.safe.js",
+        "id": "cordova-safe.safe",
+        "merges": [
+            "cordova.plugins.disusered"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-file-opener2/www/plugins.FileOpener2.js",
+        "id": "cordova-plugin-file-opener2.FileOpener2",
+        "clobbers": [
+            "cordova.plugins.fileOpener2"
+        ]
+    },
+    {
+        "file": "plugins/fr._46cl.focus/www/focus.js",
+        "id": "fr._46cl.focus.focus",
+        "clobbers": [
+            "cordova.plugins.Focus"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -173,7 +201,11 @@ module.exports.metadata =
     "cordova-plugin-device": "1.1.5",
     "cordova-plugin-compat": "1.1.0",
     "cordova-plugin-file": "4.3.2",
-    "com.telerik.plugins.nativepagetransitions": "0.6.5"
+    "com.telerik.plugins.nativepagetransitions": "0.6.5",
+    "cordova-plugin-zip": "3.1.0",
+    "cordova-safe": "2.0.1",
+    "cordova-plugin-file-opener2": "2.0.9",
+    "fr._46cl.focus": "0.1.3"
 };
 // BOTTOM OF METADATA
 });

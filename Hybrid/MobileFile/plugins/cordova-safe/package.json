@@ -1,0 +1,39 @@
+{
+  "name": "cordova-safe",
+  "version": "2.0.1",
+  "description": "Simple file crypto for Cordova.",
+  "cordova": {
+    "id": "com.disusered.safe",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "scripts": {
+    "lint": "gulp lint",
+    "watch": "gulp watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/disusered/cordova-safe.git"
+  },
+  "keywords": [
+    "cordova",
+    "file",
+    "encrypt",
+    "decrypt",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "author": "Carlos Antonio",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/disusered/cordova-safe/issues"
+  },
+  "homepage": "https://github.com/disusered/cordova-safe",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-eslint": "^0.15.0"
+  }
+}

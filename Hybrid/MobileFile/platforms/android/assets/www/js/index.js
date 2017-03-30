@@ -231,7 +231,7 @@ function isPassive() {
             $('#safeBox').on('click',function () {
                 window.plugins.nativepagetransitions.fade({
                         // the defaults for direction, duration, etc are all fine
-                        "href": "safeBox.html"
+                        "href": "password.html"
                     }, function (msg) {
                         console.log("success: " + msg)
                     }, // called when the animation has finished

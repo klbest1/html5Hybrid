@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-safe" version="2.0.1">
+  <name>Safe</name>
+  <description>Simple file crypto for Cordova.</description>
+  <license>MIT</license>
+  <keywords>cordova,file,encrypt,decrypt</keywords>
+  <repo>https://github.com/disusered/cordova-safe</repo>
+  <issue>https://github.com/disusered/cordova-safe/issues</issue>
+  <engines>
+    <engine name="cordova-android" version=">=4" />
+    <engine name="cordova-plugman" version=">=4.2.0" /><!-- needed for gradleReference support -->
+  </engines>
+  <js-module name="safe" src="www/disusered.safe.js">
+    <merges target="cordova.plugins.disusered"/>
+  </js-module>
+  <platform name="android">
+    <framework src="src/android/conceal.gradle" custom="true" type="gradleReference" />
+    <source-file src="src/android/Safe.java" target-dir="src/com/disusered"/>
+    <config-file target="res/xml/config.xml" parent="/*" >
+      <feature name="Safe">
+        <param name="android-package" value="com.disusered.Safe"/>
+      </feature>
+    </config-file>
+    <config-file target="AndroidManifest.xml" parent="/manifest">
+      <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    </config-file>
+  </platform>
+  <platform name="ios">
+    <config-file parent="/*" target="config.xml">
+      <feature name="Safe">
+        <param name="ios-package" value="Safe"/>
+      </feature>
+    </config-file>
+    <framework src="Foundation.framework" />
+    <framework src="Security.framework" />
+    <source-file src="src/ios/Safe.m"/>
+    <header-file src="src/ios/Safe.h"/>
+    <header-file src="src/ios/RNCryptor/RNCryptor+Private.h" />
+    <header-file src="src/ios/RNCryptor/RNCryptor-Prefix.pch" />
+    <header-file src="src/ios/RNCryptor/RNCryptor.h" />
+    <source-file src="src/ios/RNCryptor/RNCryptor.m" />
+    <header-file src="src/ios/RNCryptor/RNCryptorEngine.h" />
+    <source-file src="src/ios/RNCryptor/RNCryptorEngine.m" />
+    <header-file src="src/ios/RNCryptor/RNDecryptor.h" />
+    <source-file src="src/ios/RNCryptor/RNDecryptor.m" />
+    <header-file src="src/ios/RNCryptor/RNEncryptor.h" />
+    <source-file src="src/ios/RNCryptor/RNEncryptor.m" />
+  </platform>
+</plugin>

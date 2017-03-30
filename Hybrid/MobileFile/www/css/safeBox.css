@@ -1,0 +1,374 @@
+@charset "UTF-8";
+html, body {
+  -webkit-user-select: none;
+  margin: 0;
+  padding: 0; }
+
+.head {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 64px;
+  line-height: 64px; }
+
+/*命名规范笔记,笔记:内容会把父节点撑大,如果没有对父节点设置大小*/
+.headSkin {
+  background: orange;
+  color: white;
+  text-align: center;
+  font-size: large; }
+
+.title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  margin: 0; }
+
+.title-skin {
+  line-height: 64px;
+  text-align: center; }
+
+.content {
+  position: absolute;
+  top: 64px;
+  left: 0;
+  right: 0;
+  bottom: 0; }
+
+.contentSkin {
+  background: blanchedalmond; }
+
+.nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px; }
+
+.currentPath {
+  line-height: 40px;
+  position: absolute;
+  left: 20px;
+  height: 40px; }
+
+.currentPathSkin {
+  font-size: 2rem;
+  color: dodgerblue; }
+
+.upper {
+  position: absolute;
+  right: 20px;
+  height: 40px;
+  line-height: 40px; }
+
+.upperSkin {
+  font-size: 2rem;
+  color: dodgerblue; }
+
+.upperSkin:active {
+  color: lightblue; }
+
+.navSkin {
+  background: rosybrown; }
+
+/**********列表******/
+ul, li {
+  list-style: none;
+  padding: 0;
+  margin: 0; }
+
+.listContainer {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  right: 0;
+  bottom: 60px;
+  overflow: hidden; }
+
+.templete {
+  display: none; }
+
+.listItem {
+  height: 6rem;
+  position: relative; }
+
+.listItemSkin {
+  background: white;
+  border: solid 1px lavender; }
+
+.listItemSkin:active {
+  background: lightgray; }
+
+.icon-check-common {
+  display: inline-block;
+  vertical-align: middle;
+  width: 4rem;
+  margin-left: 2rem;
+  margin-right: 1rem;
+  margin-top: 0.4rem;
+  text-align: center; }
+
+.icon-check-common {
+  vertical-align: middle; }
+
+.icon-check-common:before {
+  font-size: 4rem; }
+
+.icon {
+  position: relative;
+  margin-left: 2rem;
+  width: 4rem;
+  height: 6rem;
+  display: inline-block;
+  vertical-align: middle; }
+
+.directory {
+  background: url("../img/folder.png") no-repeat center;
+  background-size: 4rem; }
+
+.file {
+  background: url("../img/file.png") no-repeat center;
+  background-size: 4rem; }
+
+.label {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  line-height: 6rem;
+  height: 6rem;
+  margin-left: 1rem; }
+
+.labelSkin {
+  color: black;
+  font-size: medium; }
+
+/****操作栏***/
+.operator {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 60px;
+  display: flex; }
+
+.operatorSkin {
+  background: ghostwhite; }
+
+.operatorEdit {
+  bottom: -60px; }
+
+.bottomLabelCommon {
+  height: 60px;
+  flex: 1;
+  text-align: center; }
+
+.bottomLabelCommonSKin {
+  font-size: 2rem; }
+
+.bottomLabelCommonSKin:active, .bottomLabelCommonSKin:before:active {
+  background: lightgray; }
+
+.bottomLabelCommonSKin:before {
+  display: block;
+  height: 2.5rem; }
+
+.icon-plus:before {
+  font-size: 3.2rem;
+  position: relative;
+  top: -0.5rem; }
+
+.operatorMoveIn {
+  animation: operatorMovIn 0.4s;
+  bottom: 0; }
+
+.operatorMoveOut {
+  animation: operatorMovOut 0.4s;
+  bottom: -60px; }
+
+.operator-consult {
+  bottom: -60px;
+  transition: -webkit-transform 0.3s ease-in;
+  transform: translateY(0) translateZ(0); }
+
+.operator-consult-up {
+  transform: translateY(-60px) translateZ(0); }
+
+/***好奇怪动画跑到顶上去了,为什么????
+***笔记 草果然引用到另外一个文件的CSS了
+**/
+@keyframes operatorMovIn {
+  0% {
+    bottom: -60px; }
+  100% {
+    bottom: 0; } }
+@keyframes operatorMovOut {
+  0% {
+    bottom: 0; }
+  100% {
+    bottom: -60px; } }
+/****对话框部分CSS*/
+.dialogOverlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0; }
+
+.dialogOverlaySkin {
+  background: rgba(0, 0, 0, 0.8);
+  display: none; }
+
+.dialog {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px; }
+
+.dialogSKin {
+  background: #efefef; }
+
+.dialogContent {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  right: 0;
+  height: 100px;
+  padding: 0 24px 0 20px; }
+
+.dialogContentSkin {
+  text-align: center; }
+
+.dialogContent .input {
+  width: 100%;
+  height: 50px; }
+
+.dialogContent .inputSkin {
+  font-size: 2rem; }
+
+.buttons {
+  position: absolute;
+  display: flex;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px; }
+
+.buttonCommon {
+  flex: 1;
+  height: 40px;
+  margin: 0 20px 0 20px;
+  line-height: 40px; }
+
+.buttonCommonSkin {
+  color: #666;
+  font-size: large;
+  text-align: center;
+  outline: none; }
+
+#wrapper {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 60px;
+  left: 0;
+  width: 100%;
+  background: #ccc;
+  overflow: hidden; }
+
+.listContainer {
+  z-index: 1;
+  top: 0;
+  height: 2000px;
+  transform: translateZ(0);
+  overflow: auto; }
+
+.listItem {
+  display: block;
+  float: left;
+  width: 10rem;
+  height: 10rem; }
+
+.listItemSkin {
+  background-color: #fafafa;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc; }
+
+.operator {
+  z-index: 2; }
+
+.head {
+  z-index: 2; }
+
+body {
+  overflow: hidden; }
+
+.icon-check-common {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 3rem;
+  height: 3rem;
+  margin: 0;
+  line-height: 3rem;
+  text-align: center; }
+
+.icon-check-common-skin:before {
+  font-size: 2rem;
+  color: dodgerblue; }
+
+.icon {
+  position: absolute;
+  width: 4rem;
+  height: 4rem;
+  top: 1.5rem;
+  left: 3rem;
+  margin: 0; }
+
+.label {
+  position: absolute;
+  top: 6rem;
+  left: 0.5rem;
+  right: 0.5rem;
+  bottom: 0;
+  margin: 0;
+  text-align: center;
+  height: 4rem;
+  line-height: 4rem; }
+
+.password-container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 99; }
+
+.password-container-skin {
+  background-color: #686BC5; }
+
+.bar-left-item-skin:before {
+  color: white; }
+
+.password-input {
+  position: absolute;
+  left: 20rem;
+  top: 10rem;
+  width: 100px; }
+
+.pass-box {
+  position: relative;
+  top: 14rem;
+  width: 4rem;
+  height: 4rem;
+  float: left;
+  margin-left: 4.8rem; }
+
+.pass-box-skin {
+  background-color: cadetblue;
+  border: 2px solid white; }
+
+/*# sourceMappingURL=safeBox.css.map */

@@ -86,9 +86,7 @@ ul, li {
   left: 0;
   right: 0;
   bottom: 60px;
-  overflow: hidden;
-  z-index: 1;
-}
+  overflow: hidden; }
 
 .templete {
   display: none; }

@@ -1,3 +1,6 @@
 {
-    "libz.tbd": 1
+    "libz.tbd": 1,
+    "libz.dylib": 1,
+    "Foundation.framework": 1,
+    "Security.framework": 1
 }

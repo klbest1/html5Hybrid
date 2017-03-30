@@ -1,0 +1,128 @@
+@import 'index';
+
+$headHight: 64px;
+$operatorHight: 60px;
+$listItemWidth:10rem;
+$iconTop: 1.5rem;
+$labelTop:$iconTop + $iconWidth + 0.5rem;
+$boxWidth:4rem;
+$space:(40rem - $boxWidth*4) / 5;
+
+#wrapper {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: $operatorHight;
+  left: 0;
+  width: 100%;
+  background: #ccc;
+  overflow: hidden;
+}
+
+.listContainer {
+  z-index: 1;
+  top: 0;
+  height: 2000px;
+  transform: translateZ(0);
+  overflow: auto;
+}
+
+.listItem {
+  display: block;
+  float: left;
+  width: 10rem;
+  height: 10rem;
+}
+
+.listItemSkin {
+  background-color: #fafafa;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+.operator {
+  z-index: 2;
+}
+
+.head {
+  z-index: 2;
+}
+
+body {
+  overflow: hidden;
+}
+
+.icon-check-common {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 3rem;
+  height: 3rem;
+  margin: 0;
+  line-height: 3rem;
+  text-align: center;
+}
+
+.icon-check-common-skin:before {
+  font-size: 2rem;
+  color: dodgerblue;
+}
+
+.icon {
+  position: absolute;
+  width: $iconWidth;
+  height: $iconWidth;
+  top: 1.5rem;
+  left: ($listItemWidth - $iconWidth)/2;
+  margin: 0;
+}
+
+.label{
+  position: absolute;
+  top:$labelTop;
+  left: 0.5rem;
+  right: 0.5rem;
+  bottom: 0;
+  margin: 0;
+  text-align: center;
+  height: $listItemWidth - $labelTop;
+  line-height: $listItemWidth - $labelTop;
+}
+
+.password-container{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 99;
+}
+
+.password-container-skin{
+  background-color: #686BC5;
+}
+
+.bar-left-item-skin:before{
+  color: white;
+}
+
+.password-input{
+  position: absolute;
+  left: 20rem;
+  top:10rem;
+  width: 100px;
+}
+
+.pass-box{
+  position: relative;
+  top: 14rem;
+  width: 4rem;
+  height: 4rem;
+  float: left;
+  margin-left: $space;
+}
+
+.pass-box-skin{
+  background-color: cadetblue;
+  border: 2px solid white;
+}

@@ -3,6 +3,7 @@
  */
 
 function HtmlDealer() {
+    this.myscrollView = null;
 }
 
 var animation = (function () {
@@ -59,14 +60,14 @@ HtmlDealer.prototype = {
                 }, false);
             }
         }
-        myScroll.refresh();
+        this.myscrollView.refresh();
     },
 
     scrollToCell:function (entry) {
         var idName = "#" + pinyin.getFullChars(entry.name);
         var listItem = document.querySelector(idName);
         animation.blink($(listItem));
-        myScroll.scrollToElement(listItem, null, null, true)
+        this.myscrollView.scrollToElement(listItem, null, null, true)
     },
     gotoNextDirectory:function (fileItem) {
         var entry = fileItem.data("entry");

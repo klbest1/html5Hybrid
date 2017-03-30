@@ -27,6 +27,24 @@
                         {
                             "xml": "<feature name=\"NativePageTransitions\"><param name=\"android-package\" value=\"com.telerik.plugins.nativepagetransitions.NativePageTransitions\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Safe\"><param name=\"android-package\" value=\"com.disusered.Safe\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"FileOpener2\"><param name=\"android-package\" value=\"io.github.pwlin.cordova.plugins.fileopener2.FileOpener2\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Focus\"><param name=\"android-package\" value=\"fr._46cl.focus.Focus\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        }
+                    ],
+                    "/widget": [
+                        {
+                            "xml": "<feature name=\"Zip\"><param name=\"android-package\" value=\"org.apache.cordova.Zip\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -36,6 +54,22 @@
                     "/*": [
                         {
                             "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\" />",
+                            "count": 1
+                        }
+                    ],
+                    "/manifest": [
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
+                            "count": 1
+                        }
+                    ],
+                    "/manifest/application": [
+                        {
+                            "xml": "<provider android:authorities=\"io.cordova.hellocordova.opener.provider\" android:exported=\"false\" android:grantUriPermissions=\"true\" android:name=\"io.github.pwlin.cordova.plugins.fileopener2.FileProvider\"><meta-data android:name=\"android.support.FILE_PROVIDER_PATHS\" android:resource=\"@xml/opener_paths\" /></provider>",
                             "count": 1
                         }
                     ]
@@ -57,6 +91,18 @@
             "PACKAGE_NAME": "io.cordova.hellocordova"
         },
         "com.telerik.plugins.nativepagetransitions": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-zip": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-safe": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-file-opener2": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "fr._46cl.focus": {
             "PACKAGE_NAME": "io.cordova.hellocordova"
         }
     },
@@ -226,6 +272,34 @@
             "clobbers": [
                 "window.plugins.nativepagetransitions"
             ]
+        },
+        {
+            "file": "plugins/cordova-plugin-zip/zip.js",
+            "id": "cordova-plugin-zip.Zip",
+            "clobbers": [
+                "zip"
+            ]
+        },
+        {
+            "file": "plugins/cordova-safe/www/disusered.safe.js",
+            "id": "cordova-safe.safe",
+            "merges": [
+                "cordova.plugins.disusered"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-file-opener2/www/plugins.FileOpener2.js",
+            "id": "cordova-plugin-file-opener2.FileOpener2",
+            "clobbers": [
+                "cordova.plugins.fileOpener2"
+            ]
+        },
+        {
+            "file": "plugins/fr._46cl.focus/www/focus.js",
+            "id": "fr._46cl.focus.focus",
+            "clobbers": [
+                "cordova.plugins.Focus"
+            ]
         }
     ],
     "plugin_metadata": {
@@ -233,6 +307,10 @@
         "cordova-plugin-device": "1.1.5",
         "cordova-plugin-compat": "1.1.0",
         "cordova-plugin-file": "4.3.2",
-        "com.telerik.plugins.nativepagetransitions": "0.6.5"
+        "com.telerik.plugins.nativepagetransitions": "0.6.5",
+        "cordova-plugin-zip": "3.1.0",
+        "cordova-safe": "2.0.1",
+        "cordova-plugin-file-opener2": "2.0.9",
+        "fr._46cl.focus": "0.1.3"
     }
 }

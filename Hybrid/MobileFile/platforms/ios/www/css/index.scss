@@ -12,6 +12,7 @@ html, body {
   -webkit-user-select: none;
   margin: 0;
   padding: 0;
+
 }
 
 .head {
@@ -31,6 +32,19 @@ html, body {
   font-size: large;
 }
 
+.title{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  margin: 0;
+}
+
+.title-skin{
+  line-height: $headHight;
+  text-align: center;
+}
 .content {
   position: absolute;
   top: $headHight;
@@ -123,16 +137,23 @@ ul, li {
 }
 
 //笔记:relative 不设置高宽,默认全屏
-.icon-check-common, .icon-check-common:before {
+.icon-check-common {
   display: inline-block;
   vertical-align: middle;
   width: 4rem;
-  font-size: 4rem;
+  margin-left: 2rem;
+  margin-right: 1rem;
+  margin-top: 0.4rem;
+  ///*也许是受vertical-align影响,同时定位是relative所以 text-aligncenter不能产生像绝对定位的效果*/
+  text-align: center;
 }
 
 .icon-check-common {
   vertical-align: middle;
-  margin-left: 2rem;
+}
+
+.icon-check-common:before{
+  font-size: 4rem;
 }
 
 .icon {
@@ -210,7 +231,9 @@ ul, li {
 }
 
 .icon-plus:before {
-  font-size: 3rem;
+  font-size: 3.2rem;
+  position: relative;
+  top: -0.5rem;
 }
 
 //操作栏动画

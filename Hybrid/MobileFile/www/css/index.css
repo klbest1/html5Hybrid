@@ -19,6 +19,18 @@ html, body {
   text-align: center;
   font-size: large; }
 
+.title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  margin: 0; }
+
+.title-skin {
+  line-height: 64px;
+  text-align: center; }
+
 .content {
   position: absolute;
   top: 64px;
@@ -90,15 +102,20 @@ ul, li {
 .listItemSkin:active {
   background: lightgray; }
 
-.icon-check-common, .icon-check-common:before {
+.icon-check-common {
   display: inline-block;
   vertical-align: middle;
   width: 4rem;
-  font-size: 4rem; }
+  margin-left: 2rem;
+  margin-right: 1rem;
+  margin-top: 0.4rem;
+  text-align: center; }
 
 .icon-check-common {
-  vertical-align: middle;
-  margin-left: 2rem; }
+  vertical-align: middle; }
+
+.icon-check-common:before {
+  font-size: 4rem; }
 
 .icon {
   position: relative;
@@ -159,7 +176,9 @@ ul, li {
   height: 2.5rem; }
 
 .icon-plus:before {
-  font-size: 3rem; }
+  font-size: 3.2rem;
+  position: relative;
+  top: -0.5rem; }
 
 .operatorMoveIn {
   animation: operatorMovIn 0.4s;

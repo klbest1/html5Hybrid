@@ -19,6 +19,8 @@
 var app = {
     // Application Constructor
     initialize: function () {
+        var size = $(window).width() / 41;
+        $('html').css('font-size', size);
         this.bindEvents();
     },
     // Bind Event Listeners
@@ -27,6 +29,10 @@ var app = {
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function () {
         document.addEventListener('deviceready', this.onDeviceReady, false);
+        document.addEventListener('pause', this.onPause, false);
+        document.addEventListener('resume', this.onResume, false);
+        document.addEventListener('active', this.onActivated, false);
+
     },
     // deviceready Event Handler
     //
@@ -37,6 +43,15 @@ var app = {
         $(function () {
             ready()
         });
+    },
+    onPause: function () {
+        // locaDataManager.emptyDataForKey(keySelectedBox);
+    },
+    onResume: function () {
+        // locaDataManager.emptyDataForKey(keySelectedBox);
+    },
+    onActivated: function () {
+        locaDataManager.emptyDataForKey(keySelectedBox);
     }
 };
 
@@ -59,13 +74,12 @@ function isPassive() {
  3.原来是scss,自动把我的类名.listContainer转为小写了，我的饿fuck,
  4.所以要经常看chorme调试界面右边的css设置!!!
  */
-var myScroll;
-
-function ready() {
+// var myScroll;
+ function ready() {
     var loadApp = {
         setScreen: function () {
-            var size = $(window).width() / 41;
-            $('html').css('font-size', size);
+            // var size = $(window).width() / 41;
+            // $('html').css('font-size', size);
         },
         dataInit: {
             listItemClickFun: function (event) {
@@ -80,6 +94,35 @@ function ready() {
                     });
                 }
             },
+            recoverSelected: function () {
+                var refreshedLabels = $('.label');
+                var checkedItemLabels = locaDataManager.getDataByKey(keySelectedBox);
+                checkedItemLabels.forEach(function (item, index) {
+                    refreshedLabels.each(function (index, label) {
+                        if (item == $(label).text()) {
+                            $(label).parent('.listItem').children('.icon-check-common')
+                                .removeClass('icon-check-empty').addClass('icon-ok-squared');
+                        }
+                    });
+                });
+                locaDataManager.emptyDataForKey(keySelectedBox);
+                if (checkedItemLabels.length > 0) {
+                    //操作栏切换动画
+                    $('#operatorCreateFile').removeClass('operatorMoveIn').addClass('operatorMoveOut');
+                    $('#operatorEdit').removeClass('operatorMoveOut').addClass('operatorMoveIn');
+                }
+            },
+            getSelectedItemLable: function () {
+                var checkedItemLabels = [];
+                var checkedItems = $('.icon-ok-squared');
+                checkedItems.each(function (inex,item) {
+                    var text = $(item).parent('.listItem').children('.label').text();
+                    checkedItemLabels.push(text);
+                });
+                //保存被选则的项,从其他页返回时保持选中
+                locaDataManager.saveData(keySelectedBox,checkedItemLabels);
+
+            },
             addCheckEvent: function () {
                 var _this = this;
                 var isSim = device.isVirtual;
@@ -91,7 +134,8 @@ function ready() {
                     }
 
                     //有选项被选中
-                    if ($('.icon-ok-squared').length > 0) {
+                    var checkedItems = $('.icon-ok-squared');
+                    if (checkedItems.length > 0) {
                         if (isSim) {
                             var elems = $('.listItem');
                             elems.each(function (index, elem) {
@@ -109,7 +153,7 @@ function ready() {
                             elems.each(function (index, elem) {
                                 attachMyEvent($(elem), function () {
                                     htmlDealer.gotoNextDirectory($(elem));
-                                }, true);
+                                }, false);
                             });
                         } else {
                             $('.list').on('click', '.listItem', _this.listItemClickFun);
@@ -136,7 +180,7 @@ function ready() {
             }
         },
         setupView: function () {
-            myScroll = new IScroll('#listContainerId', {
+            this.myScroll = new IScroll('#listContainerId', {
                 mouseWheel: true, scrollbars: true
             });
             document.addEventListener('touchmove', function (e) {
@@ -150,9 +194,11 @@ function ready() {
             var _this = this;
             //打开sd卡目录,在回调中创建页面
             fileDealer.openSDCard(function (entries, rootEntry) {
+                htmlDealer.myscrollView = loadApp.myScroll;
                 htmlDealer.createFileList(entries, rootEntry);
-                myScroll.refresh();
+                loadApp.myScroll.refresh();
                 _this.dataInit.addCheckEvent();
+                _this.dataInit.recoverSelected();
             });
         },
         bindEvents: function () {
@@ -182,18 +228,63 @@ function ready() {
                 $('#dialogView').show();
             });
 
-            $('#moveFile').on('click',function () {
+            $('#safeBox').on('click',function () {
+                window.plugins.nativepagetransitions.fade({
+                        // the defaults for direction, duration, etc are all fine
+                        "href": "safeBox.html"
+                    }, function (msg) {
+                        console.log("success: " + msg)
+                    }, // called when the animation has finished
+                    function (msg) {
+                        alert("error: " + msg)
+                    } // called in case you pass in weird values;
+                );
+            });
 
+            var gotoFileChosePage = function () {
+                window.plugins.nativepagetransitions.slide({
+                        // the defaults for direction, duration, etc are all fine
+                        "href": "fileList.html"
+                    }, function (msg) {
+                        console.log("success: " + msg)
+                    }, // called when the animation has finished
+                    function (msg) {
+                        alert("error: " + msg)
+                    } // called in case you pass in weird values;
+                );
+            };
+
+            var getChosedEntries = function () {
+                var checkedBoxes = $('.icon-ok-squared');
+                var entries = [];
+                checkedBoxes.each(function (index, item) {
+                    var entry = $(item).parent('.listItem').data('entry');
+                    entries.push(entry);
+                });
+                return entries;
+            };
+
+            $('#moveFile').on('click', function () {
+                var entries = getChosedEntries();
+                var entrypacke = {keyData: entries, keyType: fileDealType.MovingFile};
+                locaDataManager.saveData(keyEntries, entrypacke);
+                _this.dataInit.getSelectedItemLable();
+                gotoFileChosePage();
             });
 
             $('#duplicateFile').on('click', function () {
+                var entries = getChosedEntries();
+                var entrypacke = {keyData: entries, keyType: fileDealType.DuplicateFile};
+                locaDataManager.saveData(keyEntries, entrypacke);
+                _this.dataInit.getSelectedItemLable();
+                gotoFileChosePage();
             });
 
             $('#deleteFile').on('click', function () {
-               $('#operatorConsult').addClass('operator-consult-up');
+                $('#operatorConsult').addClass('operator-consult-up');
             });
-            
-            $('#operator-confirm').on('click',function () {
+
+            $('#operator-confirm').on('click', function () {
                 var success = true;
 
                 var removeSuccess = function () {
@@ -205,29 +296,28 @@ function ready() {
                 };
 
                 var checkedItems = $('.icon-ok-squared');
-                checkedItems.each(function (index,elem) {
+                checkedItems.each(function (index, elem) {
                     var entry = $(elem).parent('.listItem').data('entry');
-                    if (entry.isFile){
-                        entry.remove(removeSuccess,removeFailed)
-                    }else {
-                        entry.removeRecursively(removeSuccess,removeFailed);
+                    if (entry.isFile) {
+                        entry.remove(removeSuccess, removeFailed)
+                    } else {
+                        entry.removeRecursively(removeSuccess, removeFailed);
                     }
                 });
 
-                if( success)
-                {
+                if (success) {
                     htmlUtil.showNotifyView('删除成功');
                     //刷新列表
                     var currentEntry = $('.currentPath').data("currentEntry");
-                    fileDealer.openEntry(currentEntry,function (entries) {
-                        htmlDealer.createFileList(entries,currentEntry);
+                    fileDealer.openEntry(currentEntry, function (entries) {
+                        htmlDealer.createFileList(entries, currentEntry);
                     });
                 }
 
                 $('#operatorConsult').removeClass('operator-consult-up');
             });
 
-            $('#operator-cancel').on('click',function () {
+            $('#operator-cancel').on('click', function () {
                 $('#operatorConsult').removeClass('operator-consult-up');
             });
 
@@ -270,6 +360,7 @@ function ready() {
     };
 
     loadApp.startLoadingApp();
+    // window.indexLoadApp = loadApp;
 }
 
 app.initialize();

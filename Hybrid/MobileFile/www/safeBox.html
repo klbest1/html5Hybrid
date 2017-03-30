@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport"
+          content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="css/file_list.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="font/css/fontello.css">
+    <link rel="stylesheet" type="text/css" href="css/safeBox.css">
+
+    <script type="text/javascript" src="js/jquery-3.2.0.js"></script>
+    <script type="text/javascript" src="js/lokijs.js"></script>
+    <script type="text/javascript" src="js/iscroll.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/file_dealer.js"></script>
+    <script type="text/javascript" src="js/html_dealer.js"></script>
+    <script type="text/javascript" src="js/htmlUtil.js"></script>
+    <script type="text/javascript" src="js/device_dealer.js"></script>
+    <script type="text/javascript" src="js/localdata_manger.js"></script>
+    <script type="text/javascript" src="js/constant.js"></script>
+    <script type="text/javascript" src="js/password.js"></script>
+    <script type="text/javascript" src="js/safeBox.js"></script>
+</head>
+<body>
+<div class="head headSkin">
+    <h2 class="middle-title title-skin">我的保险柜</h2>
+    <a class="bar-right-item bar-right-item-skin icon-menu-outline" id="bar-right-itemoneID"></a>
+</div>
+
+<div class="content contentSkin">
+    <div id="wrapper">
+        <div class="listContainer" id="listContainerId">
+            <ul class="list" id="listID">
+                <li class="templete">
+                    <div class="icon-check-common icon-check-common-skin icon-check-empty "></div>
+                    <div class="icon iconSkin"></div>
+                    <div class="label labelSkin">This is a floder</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="operator operatorSkin" id="operatorCreateFile">
+    <a id="myFile" class="bottomLabelCommon bottomLabelCommonSKin icon-folder">我的文件</a>
+    <a id="safeBox" class="bottomLabelCommon bottomLabelCommonSKin icon-lock-filled">保险柜</a>
+</div>
+
+<!--/*总是出现未加载图片的东西在屏幕上,搞不懂那个是个什么东西!!!!!!解决20分钟了至少,...-->
+<!--继续寻找中6.25**
+他妈的终于找到了,是我刚才复制到rtf文件中,再复制过来,复制了一些非法字符在html中,而且这些文件还是隐藏不可见的,
+删除是没有用的.....
+你妈,巨坑
+/-->
+<div class="password-container password-container-skin">
+    <a class="bar-left-item icon-left-big bar-left-item-skin" id="bar-left-itemoneID"></a>
+    <input type="password" class="password-input" id="password-input">
+    <a class="pass-box pass-box-skin"></a>
+    <a class="pass-box pass-box-skin"></a>
+    <a class="pass-box pass-box-skin"></a>
+    <a class="pass-box pass-box-skin"></a>
+</div>
+
+</body>
+</html>
