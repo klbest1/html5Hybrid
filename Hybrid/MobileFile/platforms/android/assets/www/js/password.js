@@ -60,7 +60,54 @@ function ready() {
             var _this = this;
         },
         bindEvents: function () {
+            $('#bar-left-itemoneID').on('click',function () {
+                window.plugins.nativepagetransitions.fade({
+                        // the defaults for direction, duration, etc are all fine
+                        "href": "index.html"
+                    }, function (msg) {
+                        console.log("success: " + msg)
+                    }, // called when the animation has finished
+                    function (msg) {
+                        alert("error: " + msg)
+                    } // called in case you pass in weird values;
+                );
+            });
+
+            var password = [];
+            var setStarsInTheSquare = function (starsNumber) {
+                var squares = $('.pass-box');
+                squares.each(function (index,item) {
+                    $(item).text("");
+                });
+                for (var i = 0; i<starsNumber;i++){
+                    var box = squares[i];
+                    $(box).text("*");
+                }
+            };
+
+            $('.key-number').on('click',function () {
+                if (password.length < 4){
+                    var userInput = $(this).text();
+                    password.push(userInput);
+                    setStarsInTheSquare(password.length);
+                    if (password.length == 4){
+                        var finalPassWord = "";
+                        password.forEach(function (item,index){
+                            finalPassWord = finalPassWord + item;
+                        });
+                        alert('开始校验!!' + finalPassWord);
+                    }
+                }
+            });
             
+            $('#findPassword').on('click',function () {
+                
+            });
+
+            $('#delete').on('click',function () {
+                password.pop();
+                setStarsInTheSquare(password.length);
+            });
         },
 
         startLoadingApp: function () {
