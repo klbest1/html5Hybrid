@@ -7,6 +7,7 @@ var keyType = 'type';
 var fileDealType = {
     "MovingFile":0,
     "DuplicateFile":1
-}
+};
 
-var keySelectedBox = "selectedBoxes"
+var keySelectedBox = "selectedBoxes";
+var keyUserPassword = "password";

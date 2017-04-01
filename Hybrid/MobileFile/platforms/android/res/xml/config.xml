@@ -22,15 +22,8 @@
     <feature name="Zip">
         <param name="android-package" value="org.apache.cordova.Zip" />
     </feature>
-    <feature name="Safe">
-        <param name="android-package" value="com.disusered.Safe" />
-    </feature>
     <feature name="FileOpener2">
         <param name="android-package" value="io.github.pwlin.cordova.plugins.fileopener2.FileOpener2" />
-    </feature>
-    <feature name="Focus">
-        <param name="android-package" value="fr._46cl.focus.Focus" />
-        <param name="onload" value="true" />
     </feature>
     <allow-intent href="market:*" />
     <name>HelloCordova</name>

@@ -339,36 +339,4 @@ body {
   height: 4rem;
   line-height: 4rem; }
 
-.password-container {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  z-index: 99; }
-
-.password-container-skin {
-  background-color: #686BC5; }
-
-.bar-left-item-skin:before {
-  color: white; }
-
-.password-input {
-  position: absolute;
-  left: 20rem;
-  top: 10rem;
-  width: 100px; }
-
-.pass-box {
-  position: relative;
-  top: 14rem;
-  width: 4rem;
-  height: 4rem;
-  float: left;
-  margin-left: 4.8rem; }
-
-.pass-box-skin {
-  background-color: cadetblue;
-  border: 2px solid white; }
-
 /*# sourceMappingURL=safeBox.css.map */

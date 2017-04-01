@@ -51,7 +51,7 @@ var app = {
         // locaDataManager.emptyDataForKey(keySelectedBox);
     },
     onActivated: function () {
-        locaDataManager.emptyDataForKey(keySelectedBox);
+        locaDBManager.emptyDataForKey(keySelectedBox);
     }
 };
 
@@ -96,7 +96,7 @@ function isPassive() {
             },
             recoverSelected: function () {
                 var refreshedLabels = $('.label');
-                var checkedItemLabels = locaDataManager.getDataByKey(keySelectedBox);
+                var checkedItemLabels = locaDBManager.getDataByKey(keySelectedBox);
                 checkedItemLabels.forEach(function (item, index) {
                     refreshedLabels.each(function (index, label) {
                         if (item == $(label).text()) {
@@ -105,7 +105,7 @@ function isPassive() {
                         }
                     });
                 });
-                locaDataManager.emptyDataForKey(keySelectedBox);
+                locaDBManager.emptyDataForKey(keySelectedBox);
                 if (checkedItemLabels.length > 0) {
                     //操作栏切换动画
                     $('#operatorCreateFile').removeClass('operatorMoveIn').addClass('operatorMoveOut');
@@ -120,7 +120,7 @@ function isPassive() {
                     checkedItemLabels.push(text);
                 });
                 //保存被选则的项,从其他页返回时保持选中
-                locaDataManager.saveData(keySelectedBox,checkedItemLabels);
+                locaDBManager.saveData(keySelectedBox,checkedItemLabels);
 
             },
             addCheckEvent: function () {
@@ -231,7 +231,7 @@ function isPassive() {
             $('#safeBox').on('click',function () {
                 window.plugins.nativepagetransitions.fade({
                         // the defaults for direction, duration, etc are all fine
-                        "href": "safeBox.html"
+                        "href": "password.html"
                     }, function (msg) {
                         console.log("success: " + msg)
                     }, // called when the animation has finished
@@ -267,7 +267,7 @@ function isPassive() {
             $('#moveFile').on('click', function () {
                 var entries = getChosedEntries();
                 var entrypacke = {keyData: entries, keyType: fileDealType.MovingFile};
-                locaDataManager.saveData(keyEntries, entrypacke);
+                locaDBManager.saveData(keyEntries, entrypacke);
                 _this.dataInit.getSelectedItemLable();
                 gotoFileChosePage();
             });
@@ -275,7 +275,7 @@ function isPassive() {
             $('#duplicateFile').on('click', function () {
                 var entries = getChosedEntries();
                 var entrypacke = {keyData: entries, keyType: fileDealType.DuplicateFile};
-                locaDataManager.saveData(keyEntries, entrypacke);
+                locaDBManager.saveData(keyEntries, entrypacke);
                 _this.dataInit.getSelectedItemLable();
                 gotoFileChosePage();
             });

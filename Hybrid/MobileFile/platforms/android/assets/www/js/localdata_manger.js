@@ -2,7 +2,7 @@
  * Created by linkang on 25/03/2017.
  */
 
-var locaDataManager =  (function () {
+var locaDBManager =  (function () {
     var nameTemp = 'tempraryData';
     var me = {};
     var db = new loki('MobileFile.db');

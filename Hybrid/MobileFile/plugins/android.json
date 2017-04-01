@@ -22,13 +22,7 @@
         "cordova-plugin-zip": {
             "PACKAGE_NAME": "io.cordova.hellocordova"
         },
-        "cordova-safe": {
-            "PACKAGE_NAME": "io.cordova.hellocordova"
-        },
         "cordova-plugin-file-opener2": {
-            "PACKAGE_NAME": "io.cordova.hellocordova"
-        },
-        "fr._46cl.focus": {
             "PACKAGE_NAME": "io.cordova.hellocordova"
         }
     },

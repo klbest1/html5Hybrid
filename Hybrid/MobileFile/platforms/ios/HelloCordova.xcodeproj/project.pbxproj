@@ -38,11 +38,6 @@
 		EDA512D3EB5B4612BF4B2A52 /* mztools.c in Resources */ = {isa = PBXBuildFile; fileRef = 925AFBD871884CE881535E68 /* mztools.c */; };
 		FE50BA34BA454F569BCF190F /* ioapi.c in Resources */ = {isa = PBXBuildFile; fileRef = 2F3E7B366BB243C38281F3E8 /* ioapi.c */; };
 		F1208DA5EB2C4B48B81CB616 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B9251DF44894776B6F3EFA1 /* libz.dylib */; };
-		3227D0C993D4482D8D380C3D /* Safe.m in Sources */ = {isa = PBXBuildFile; fileRef = E8250B48B0F64DD8A7BFADE8 /* Safe.m */; };
-		2E2470B840B64FE1A25B9F37 /* RNCryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 91746F7D428A4101AF50A499 /* RNCryptor.m */; };
-		43E1AFE07B924CD297139A14 /* RNCryptorEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4D9F6FA9294EAC8B9DF142 /* RNCryptorEngine.m */; };
-		1DDEDBEC90E048A68CECDF03 /* RNDecryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = A3490BBEC72142B883C92576 /* RNDecryptor.m */; };
-		E3E1127D55944BEA9632B9BC /* RNEncryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 56DB2192137B42948832C673 /* RNEncryptor.m */; };
 		115B3A67DC914299ADFDED4A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72FDC2BEE30D452B9A55D67D /* Foundation.framework */; };
 		5464218067384B0682A33DF3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E262BE4E327445B598CC2D64 /* Security.framework */; };
 		E3DEF48D0101479F9D0E25FD /* FileOpener2.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FF6674760A04AC68510C31C /* FileOpener2.m */; };
@@ -134,18 +129,6 @@
 		33237F2EB9184FDFB8C10C22 /* ioapi.h */ = {isa = PBXFileReference; name = "ioapi.h"; path = "cordova-plugin-zip/Plugins/minizip/ioapi.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 		54A2EA38658C4E609F31870B /* crypt.h */ = {isa = PBXFileReference; name = "crypt.h"; path = "cordova-plugin-zip/Plugins/minizip/crypt.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 		0B9251DF44894776B6F3EFA1 /* libz.dylib */ = {isa = PBXFileReference; name = "libz.dylib"; path = "usr/lib/libz.dylib"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = compiled.mach-o.dylib; explicitFileType = undefined; includeInIndex = 0; };
-		E8250B48B0F64DD8A7BFADE8 /* Safe.m */ = {isa = PBXFileReference; name = "Safe.m"; path = "cordova-safe/Safe.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
-		91746F7D428A4101AF50A499 /* RNCryptor.m */ = {isa = PBXFileReference; name = "RNCryptor.m"; path = "cordova-safe/RNCryptor.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
-		AB4D9F6FA9294EAC8B9DF142 /* RNCryptorEngine.m */ = {isa = PBXFileReference; name = "RNCryptorEngine.m"; path = "cordova-safe/RNCryptorEngine.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
-		A3490BBEC72142B883C92576 /* RNDecryptor.m */ = {isa = PBXFileReference; name = "RNDecryptor.m"; path = "cordova-safe/RNDecryptor.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
-		56DB2192137B42948832C673 /* RNEncryptor.m */ = {isa = PBXFileReference; name = "RNEncryptor.m"; path = "cordova-safe/RNEncryptor.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
-		B2056882AE8D48E99E1FD9F7 /* Safe.h */ = {isa = PBXFileReference; name = "Safe.h"; path = "cordova-safe/Safe.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
-		4DB2FE412242440F96B41CDC /* RNCryptor+Private.h */ = {isa = PBXFileReference; name = "RNCryptor+Private.h"; path = "cordova-safe/RNCryptor+Private.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
-		A7549940C0AB4D889AA34296 /* RNCryptor-Prefix.pch */ = {isa = PBXFileReference; name = "RNCryptor-Prefix.pch"; path = "cordova-safe/RNCryptor-Prefix.pch"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
-		9E3FAF09539E4F4BA2A54877 /* RNCryptor.h */ = {isa = PBXFileReference; name = "RNCryptor.h"; path = "cordova-safe/RNCryptor.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
-		5A7AA774F22745AD82C56590 /* RNCryptorEngine.h */ = {isa = PBXFileReference; name = "RNCryptorEngine.h"; path = "cordova-safe/RNCryptorEngine.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
-		AA8B322CF2644D6FAF33AED9 /* RNDecryptor.h */ = {isa = PBXFileReference; name = "RNDecryptor.h"; path = "cordova-safe/RNDecryptor.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
-		FC94519F1F1A467EBCC4D471 /* RNEncryptor.h */ = {isa = PBXFileReference; name = "RNEncryptor.h"; path = "cordova-safe/RNEncryptor.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 		72FDC2BEE30D452B9A55D67D /* Foundation.framework */ = {isa = PBXFileReference; name = "Foundation.framework"; path = "System/Library/Frameworks/Foundation.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
 		E262BE4E327445B598CC2D64 /* Security.framework */ = {isa = PBXFileReference; name = "Security.framework"; path = "System/Library/Frameworks/Security.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
 		6FF6674760A04AC68510C31C /* FileOpener2.m */ = {isa = PBXFileReference; name = "FileOpener2.m"; path = "cordova-plugin-file-opener2/FileOpener2.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
@@ -307,18 +290,6 @@
 				E8D8E93B3FAF45D985E52AC0 /* mztools.h */,
 				33237F2EB9184FDFB8C10C22 /* ioapi.h */,
 				54A2EA38658C4E609F31870B /* crypt.h */,
-				E8250B48B0F64DD8A7BFADE8 /* Safe.m */,
-				91746F7D428A4101AF50A499 /* RNCryptor.m */,
-				AB4D9F6FA9294EAC8B9DF142 /* RNCryptorEngine.m */,
-				A3490BBEC72142B883C92576 /* RNDecryptor.m */,
-				56DB2192137B42948832C673 /* RNEncryptor.m */,
-				B2056882AE8D48E99E1FD9F7 /* Safe.h */,
-				4DB2FE412242440F96B41CDC /* RNCryptor+Private.h */,
-				A7549940C0AB4D889AA34296 /* RNCryptor-Prefix.pch */,
-				9E3FAF09539E4F4BA2A54877 /* RNCryptor.h */,
-				5A7AA774F22745AD82C56590 /* RNCryptorEngine.h */,
-				AA8B322CF2644D6FAF33AED9 /* RNDecryptor.h */,
-				FC94519F1F1A467EBCC4D471 /* RNEncryptor.h */,
 				6FF6674760A04AC68510C31C /* FileOpener2.m */,
 				265A8508764F4C6DB40D9367 /* FileOpener2.h */,
 			);
@@ -456,11 +427,6 @@
 				C7C1C6C7743C445498746FF5 /* unzip.c in Resources */,
 				EDA512D3EB5B4612BF4B2A52 /* mztools.c in Resources */,
 				FE50BA34BA454F569BCF190F /* ioapi.c in Resources */,
-				3227D0C993D4482D8D380C3D /* Safe.m in Sources */,
-				2E2470B840B64FE1A25B9F37 /* RNCryptor.m in Sources */,
-				43E1AFE07B924CD297139A14 /* RNCryptorEngine.m in Sources */,
-				1DDEDBEC90E048A68CECDF03 /* RNDecryptor.m in Sources */,
-				E3E1127D55944BEA9632B9BC /* RNEncryptor.m in Sources */,
 				E3DEF48D0101479F9D0E25FD /* FileOpener2.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

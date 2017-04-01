@@ -4,7 +4,8 @@
 .notificationView {
   position: relative;
   height: 64px;
-  display: none; }
+  display: none;
+  z-index: 999; }
 
 .notificationContent {
   position: relative;

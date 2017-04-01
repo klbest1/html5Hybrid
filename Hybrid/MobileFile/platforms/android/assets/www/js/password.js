@@ -45,13 +45,34 @@ function isPassive() {
  */
 
 function ready() {
-    
+
+    var passwordInLocal = "";
     var loadApp = {
         setScreen: function () {
 
         },
         dataInit: {
-            
+            setUpHeadView:function () {
+                if (passwordInLocal == "" || passwordInLocal == undefined){
+                    var title =  $('.middle-title');
+                    title.text('设置密码');
+                    $('#bar-right-itemoneID').show();
+                }else {
+                    $('.middle-title').text('验证密码');
+                    $('#bar-right-itemoneID').hide();
+                }
+            },
+            getPassword:function () {
+                passwordInLocal = fileDealer.getDataFromFile(fileDealer.fileType.userData,
+                    keyUserPassword,
+                    function (password) {
+                        passwordInLocal = password;
+                        loadApp.dataInit.setUpHeadView();
+                });
+            },
+            loadData:function () {
+                this.getPassword();
+            }
         },
         setupView: function () {
 
@@ -60,6 +81,10 @@ function ready() {
             var _this = this;
         },
         bindEvents: function () {
+
+            var passwordArray = [];
+            var finalPassWord = "";
+
             $('#bar-left-itemoneID').on('click',function () {
                 window.plugins.nativepagetransitions.fade({
                         // the defaults for direction, duration, etc are all fine
@@ -73,29 +98,60 @@ function ready() {
                 );
             });
 
-            var password = [];
-            var setStarsInTheSquare = function (starsNumber) {
+            //设置好密码后,存入本地文件并加密
+            $('#bar-right-itemoneID').on('click',function () {
+                if (passwordArray.length == 4){
+                    fileDealer.writeDataToFile(fileDealer.fileType.userData,keyUserPassword,finalPassWord,function () {
+                        htmlUtil.showNotifyView("设置成功!你的密码是:"+finalPassWord);
+                    });
+                }else {
+                    htmlUtil.showNotifyView("请输入4位数密码!");
+                }
+            });
+
+
+            var setStarsInTheSquare = function (starsNumber,visible) {
                 var squares = $('.pass-box');
                 squares.each(function (index,item) {
                     $(item).text("");
                 });
                 for (var i = 0; i<starsNumber;i++){
                     var box = squares[i];
-                    $(box).text("*");
+                    if (visible){
+                        $(box).text(passwordArray[i]);
+                    }else {
+                        $(box).text("*");
+                    }
                 }
             };
 
             $('.key-number').on('click',function () {
-                if (password.length < 4){
+                if (passwordArray.length < 4){
                     var userInput = $(this).text();
-                    password.push(userInput);
-                    setStarsInTheSquare(password.length);
-                    if (password.length == 4){
-                        var finalPassWord = "";
-                        password.forEach(function (item,index){
+                    passwordArray.push(userInput);
+                    setStarsInTheSquare(passwordArray.length,(passwordInLocal == ""));
+                    if (passwordArray.length == 4){
+                        passwordArray.forEach(function (item,index){
                             finalPassWord = finalPassWord + item;
                         });
-                        alert('开始校验!!' + finalPassWord);
+                       if (passwordInLocal != ""){
+                           if(passwordInLocal == finalPassWord){
+                               //校验成功
+                               window.plugins.nativepagetransitions.fade({
+                                       // the defaults for direction, duration, etc are all fine
+                                       "href": "safeBox.html"
+                                   }, function (msg) {
+                                       console.log("success: " + msg)
+                                   }, // called when the animation has finished
+                                   function (msg) {
+                                       alert("error: " + msg)
+                                   } // called in case you pass in weird values;
+                               );
+                           }else {
+                               //校验失败
+                               htmlUtil.showNotifyView("密码错误!");
+                           }
+                        }
                     }
                 }
             });
@@ -105,13 +161,17 @@ function ready() {
             });
 
             $('#delete').on('click',function () {
-                password.pop();
-                setStarsInTheSquare(password.length);
+                passwordArray.pop();
+                finalPassWord = "";
+                setStarsInTheSquare(passwordArray.length);
             });
+
+
         },
 
         startLoadingApp: function () {
             this.setScreen();
+            this.dataInit.loadData();
             this.setupView();
             this.loadResource();
             this.bindEvents();

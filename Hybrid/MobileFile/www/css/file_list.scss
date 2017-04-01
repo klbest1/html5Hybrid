@@ -6,11 +6,28 @@ $headHight: 64px;
  }
 
 /* *********导航栏*/
+.head {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: $headHight;
+  line-height: $headHight;
+}
+
+/*命名规范笔记,笔记:内容会把父节点撑大,如果没有对父节点设置大小*/
+.headSkin {
+  background: orange;
+  color: white;
+  text-align: center;
+  font-size: large;
+}
  .bar-left-item{
    position: absolute;
    left: 0;
    width: $backButtonWidth + 30px;
    text-align: center;
+   z-index: 9;
  }
 
 /*笔记:只需要对before 只能设置字体大小,父容器设置盒子大小,让其居中,设置LineHeight和高度一样高*/
@@ -23,6 +40,7 @@ $headHight: 64px;
   color: lightblue;
 }
 
+
 .middle-title{
   position: relative;
   display: inline-block;
@@ -30,16 +48,25 @@ $headHight: 64px;
   height: $headHight;
   text-align: center;
   margin: 0;
+  width: 100%;
+}
+
+.middle-title-skin{
+  font-size: 22px;
 }
 
 .bar-right-item{
   position: absolute;
   right: 0;
+  top: 0;
+  height: $headHight;
+  line-height: $headHight;
   width: $backButtonWidth + 40px;
 }
 
 .bar-right-item-skin{
-  font-size: 25px;
+  font-size: 18px;
+  text-align: center;
 }
 
 .bar-right-item-skin:active{

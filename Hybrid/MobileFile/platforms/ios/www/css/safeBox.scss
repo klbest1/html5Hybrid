@@ -5,8 +5,7 @@ $operatorHight: 60px;
 $listItemWidth:10rem;
 $iconTop: 1.5rem;
 $labelTop:$iconTop + $iconWidth + 0.5rem;
-$boxWidth:4rem;
-$space:(40rem - $boxWidth*4) / 5;
+
 
 #wrapper {
   position: absolute;
@@ -87,42 +86,4 @@ body {
   text-align: center;
   height: $listItemWidth - $labelTop;
   line-height: $listItemWidth - $labelTop;
-}
-
-.password-container{
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  z-index: 99;
-}
-
-.password-container-skin{
-  background-color: #686BC5;
-}
-
-.bar-left-item-skin:before{
-  color: white;
-}
-
-.password-input{
-  position: absolute;
-  left: 20rem;
-  top:10rem;
-  width: 100px;
-}
-
-.pass-box{
-  position: relative;
-  top: 14rem;
-  width: 4rem;
-  height: 4rem;
-  float: left;
-  margin-left: $space;
-}
-
-.pass-box-skin{
-  background-color: cadetblue;
-  border: 2px solid white;
 }

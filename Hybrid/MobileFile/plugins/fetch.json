@@ -47,27 +47,10 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-safe": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-safe"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "cordova-plugin-file-opener2": {
         "source": {
             "type": "registry",
             "id": "cordova-plugin-file-opener2"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "fr._46cl.focus": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/46cl/cordova-android-focus-plugin",
-            "subdir": "."
         },
         "is_top_level": true,
         "variables": {}

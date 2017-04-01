@@ -141,7 +141,7 @@ function ready() {
                 }
             },
             getEntryPackages: function () {
-                var fileData = locaDataManager.getDataByKey(keyEntries);
+                var fileData = locaDBManager.getDataByKey(keyEntries);
                 var entriesInDataBase = fileData.keyData;
                 //entriesInDataBase 这个不是JQUERY对象
                 entriesInDataBase.forEach(function (item, index) {
@@ -249,7 +249,7 @@ function ready() {
                     return;
                 }
 
-                var fileData = locaDataManager.getDataByKey(keyEntries);
+                var fileData = locaDBManager.getDataByKey(keyEntries);
                 var type = fileData.keyType;
                 if (type == fileDealType.MovingFile) {
 
