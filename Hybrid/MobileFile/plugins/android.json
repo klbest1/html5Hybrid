@@ -24,6 +24,9 @@
         },
         "cordova-plugin-file-opener2": {
             "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "com.jjdltc.cordova.plugin.zip": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
         }
     },
     "dependent_plugins": {

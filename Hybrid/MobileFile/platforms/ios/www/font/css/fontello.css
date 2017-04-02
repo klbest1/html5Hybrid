@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'fontello';
-  src: url('../fontello.eot?24260168');
-  src: url('../fontello.eot?24260168#iefix') format('embedded-opentype'),
-       url('../fontello.woff2?24260168') format('woff2'),
-       url('../fontello.woff?24260168') format('woff'),
-       url('../fontello.ttf?24260168') format('truetype'),
-       url('../fontello.svg?24260168#fontello') format('svg');
+  src: url('../fontello.eot?61185155');
+  src: url('../fontello.eot?61185155#iefix') format('embedded-opentype'),
+       url('../fontello.woff2?61185155') format('woff2'),
+       url('../fontello.woff?61185155') format('woff'),
+       url('../fontello.ttf?61185155') format('truetype'),
+       url('../fontello.svg?61185155#fontello') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'fontello';
-    src: url('../font/fontello.svg?24260168#fontello') format('svg');
+    src: url('../font/fontello.svg?61185155#fontello') format('svg');
   }
 }
 */
@@ -24,8 +24,7 @@
   font-family: "fontello";
   font-style: normal;
   font-weight: normal;
-  
- 
+
   /* you can be more comfortable with increased icons size */
   /* font-size: 120%; */
  
@@ -51,4 +50,5 @@
 .icon-lock-filled:before { content: '\e80b'; } /* '' */
 .icon-lock-open-filled:before { content: '\e80c'; } /* '' */
 .icon-folder:before { content: '\e80d'; } /* '' */
+.icon-briefcase:before { content: '\e80e'; } /* '' */
 .icon-menu-outline:before { content: '\e80f'; } /* '' */

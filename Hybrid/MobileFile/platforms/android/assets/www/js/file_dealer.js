@@ -4,7 +4,8 @@
 
 function FileDealer() {
     this.fileType = {
-        userData: "mobile.data"
+        userData: "mobile.data",
+        safeBox:'safeBox'
     };
     this.key = '&@^$*@&$JGG(#$$&#$';
 }
@@ -189,5 +190,71 @@ FileDealer.prototype.getDataFromFile = function (fileType, key, callBack) {
     };
     //写入到sandBox中.....
     window.resolveLocalFileSystemURL(cordova.file.dataDirectory, onInitFs, errorHandler);
+};
+
+/**
+ *
+ * 移动到文件夹
+ * */
+FileDealer.prototype.moveToDirectory = function (originEntry,destinationPath,callBack) {
+    var onInitFs = function (fs) {
+        fs.getDirectory(destinationPath, {create: true}, function(dirEntry) {
+            originEntry.moveTo(dirEntry, null, function (newEntry) {
+                callBack(newEntry);
+            }, function (error) {
+                htmlUtil.showNotifyView(error);
+            });
+        }, errorHandler);
+    };
+    //写入到sandBox中.....
+    window.resolveLocalFileSystemURL(cordova.file.dataDirectory, onInitFs, errorHandler);
+
+};
+
+/** 获取文件的FileMIMEType
+ * **/
+
+FileDealer.prototype.getMiMeType = function (fileName) {
+    var re = /(?:\.([^.]+))?$/;
+    var extenion = re.exec(fileName)[1];
+    var nameWioutExtention = fileName.replace(/'.'+ extenion/i, '');
+    // mp4v mpg4
+    var forMate = {};
+    forMate.mp4 = {mimeType:"video/mp4",type:"vedio",imageName:nameWioutExtention};
+    forMate.mp4v = {mimeType:"video/mp4",type:"vedio",imageName:nameWioutExtention};
+    forMate.mpg4 = {mimeType:"video/mp4",type:"vedio",imageName:nameWioutExtention};
+    forMate.avi = {mimeType:"video/x-msvideo",type:"vedio",imageName:nameWioutExtention};
+    forMate.rmvb = {mimeType:"application/vnd.rn-realmedia-vbr",type:"vedio",imageName:nameWioutExtention};
+    forMate.rm = {mimeType:"application/vnd.rn-realmedia",type:"vedio",imageName:nameWioutExtention};
+    forMate.wmv = {mimeType:"video/x-ms-wmv",type:"vedio",imageName:nameWioutExtention};
+
+    //image/jpeg					jpeg jpg jpe
+    forMate.jpeg = {mimeType:"image/jpeg",type:"image",imageName:nameWioutExtention};
+    forMate.jpg = {mimeType:"image/jpeg",type:"image",imageName:nameWioutExtention};
+    forMate.jpe = {mimeType:"image/jpeg",type:"image",imageName:nameWioutExtention};
+//image/png					png
+    forMate.png = {mimeType:"image/png",type:"image",imageName:nameWioutExtention};
+
+    //application/msword				doc dot
+    forMate.doc = {mimeType:"application/msword",type:"office",imageName:"office"};
+    forMate.dot = {mimeType:"application/msword",type:"office",imageName:"office"};
+   // application/vnd.openxmlformats-officedocument.wordprocessingml.document	docx
+    forMate.docx = {mimeType:"application/vnd.openxmlformats-officedocument.wordprocessingml.document",type:"office",imageName:"office"};
+    //application/vnd.ms-works			wps wks wcm wdb
+    forMate.wps = {mimeType:"application/vnd.ms-works",type:"office",imageName:"office"};
+
+    //application/vnd.ms-powerpoint			ppt pps pot
+    forMate.ppt = {mimeType:"application/vnd.ms-powerpoint",type:"ppt",imageName:"ppt"};
+    forMate.pps = {mimeType:"application/vnd.ms-powerpoint",type:"ppt",imageName:"ppt"};
+    forMate.pot = {mimeType:"application/vnd.ms-powerpoint",type:"ppt",imageName:"ppt"};
+
+    //application/vnd.openxmlformats-officedocument.presentationml.presentation	pptx
+    forMate.pptx = {mimeType:"application/vnd.openxmlformats-officedocument.presentationml.presentation",type:"ppt",imageName:"ppt"};
+
+    //application/pdf					pdf
+    forMate.pdf = {mimeType:"application/pdf",type:"pdf",imageName:"pdf"};
+
+
+    return forMate[extenion];
 };
 

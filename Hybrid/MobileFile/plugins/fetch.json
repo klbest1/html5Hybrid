@@ -54,5 +54,13 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "com.jjdltc.cordova.plugin.zip": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-zip-plugin"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

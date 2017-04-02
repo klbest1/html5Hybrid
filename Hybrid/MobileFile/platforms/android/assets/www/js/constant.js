@@ -4,6 +4,7 @@
 var keyEntries = "entries";
 var keyData = "data";
 var keyType = 'type';
+var keyPassWordFinishPage = "passWordBackPage";
 var fileDealType = {
     "MovingFile":0,
     "DuplicateFile":1
@@ -11,3 +12,11 @@ var fileDealType = {
 
 var keySelectedBox = "selectedBoxes";
 var keyUserPassword = "password";
+
+/***压缩文件的表属性*/
+var keyFilePath = "filePath";
+var keyFileMIMEType = "fileMimieType";
+var keyFileType = "fileType";
+var keyFileImage = "fileImage";
+var keyFileName = "fileName";
+var keyID = "id";

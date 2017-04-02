@@ -75,7 +75,7 @@ function isPassive() {
  4.所以要经常看chorme调试界面右边的css设置!!!
  */
 // var myScroll;
- function ready() {
+function ready() {
     var loadApp = {
         setScreen: function () {
             // var size = $(window).width() / 41;
@@ -115,12 +115,12 @@ function isPassive() {
             getSelectedItemLable: function () {
                 var checkedItemLabels = [];
                 var checkedItems = $('.icon-ok-squared');
-                checkedItems.each(function (inex,item) {
+                checkedItems.each(function (inex, item) {
                     var text = $(item).parent('.listItem').children('.label').text();
                     checkedItemLabels.push(text);
                 });
                 //保存被选则的项,从其他页返回时保持选中
-                locaDBManager.saveData(keySelectedBox,checkedItemLabels);
+                locaDBManager.saveData(keySelectedBox, checkedItemLabels);
 
             },
             addCheckEvent: function () {
@@ -228,7 +228,8 @@ function isPassive() {
                 $('#dialogView').show();
             });
 
-            $('#safeBox').on('click',function () {
+            $('#safeBox').on('click', function () {
+                locaDBManager.saveData(keyPassWordFinishPage, 'safeBox.html');
                 window.plugins.nativepagetransitions.fade({
                         // the defaults for direction, duration, etc are all fine
                         "href": "password.html"
@@ -282,6 +283,73 @@ function isPassive() {
 
             $('#deleteFile').on('click', function () {
                 $('#operatorConsult').addClass('operator-consult-up');
+            });
+
+            $('#moveToSafeBox').on('click', function () {
+                //检查是否有密码
+                fileDealer.getDataFromFile(fileDealer.fileType.userData,
+                    keyUserPassword,
+                    function (password) {
+                        //设置了密码
+                        if (password != undefined && password.length == 4) {
+                            var entries = getChosedEntries();
+                            //移动到宝箱
+                            entries.forEach(function (item, index) {
+                                var mimeTypeData = fileDealer.getMiMeType(item.name);
+                                if (mimeTypeData == undefined) {
+                                    htmlUtil.showNotifyView("暂时不支持此类型文件!");
+                                    return;
+                                }
+                                fileDealer.moveToDirectory(item, fileDealer.fileType.safeBox, function (newEntry) {
+                                    //压缩文件
+                                    var PathToResultZip = cordova.file.dataDirectory + fileDealer.fileType.safeBox +"/";
+                                    var PathToFileInString = PathToResultZip + newEntry.name;
+
+                                    JJzip.zip(PathToFileInString, {
+                                        target: PathToResultZip,
+                                        name: newEntry.name
+                                    }, function (data) {
+                                        var fileInfoData = {};
+                                        fileInfoData[keyFilePath] = newEntry.nativeURL;
+                                        fileInfoData[keyFileMIMEType] = mimeTypeData.mimeType;
+                                        fileInfoData[keyFileType] = mimeTypeData.type;
+                                        fileInfoData[keyFileImage] = mimeTypeData.imageName;
+                                        fileInfoData[keyFileName] = newEntry.name;
+                                        //写入数据库
+                                        locaDBManager.savePermanentData(locaDBManager.tableNames.SafeBoxFileInfo, fileInfoData,keyFileName);
+                                        if (newEntry.isFile) {
+                                            newEntry.remove(function () {
+                                                console.log('压缩后,删除成功');
+                                            }, function () {
+                                               console.log("压缩后,删除失败");
+                                            });
+                                        }
+                                        //刷新列表
+                                        var currentEntry = $('.currentPath').data("currentEntry");
+                                        fileDealer.openEntry(currentEntry, function (entries) {
+                                            htmlDealer.createFileList(entries, currentEntry);
+                                        });
+                                        /* Wow everiting goes good, but just in case verify data.success*/
+                                    }, function (error) {
+                                        /* Wow something goes wrong, check the error.message */
+                                        console.log(error);
+                                    });
+                                });
+                            });
+                        } else {
+                            locaDBManager.saveData(keyPassWordFinishPage, 'index.html');
+                            window.plugins.nativepagetransitions.fade({
+                                    // the defaults for direction, duration, etc are all fine
+                                    "href": "password.html"
+                                }, function (msg) {
+                                    console.log("success: " + msg)
+                                }, // called when the animation has finished
+                                function (msg) {
+                                    alert("error: " + msg)
+                                } // called in case you pass in weird values;
+                            );
+                        }
+                    });
             });
 
             $('#operator-confirm').on('click', function () {

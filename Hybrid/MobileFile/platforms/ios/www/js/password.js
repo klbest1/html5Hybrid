@@ -102,7 +102,19 @@ function ready() {
             $('#bar-right-itemoneID').on('click',function () {
                 if (passwordArray.length == 4){
                     fileDealer.writeDataToFile(fileDealer.fileType.userData,keyUserPassword,finalPassWord,function () {
-                        htmlUtil.showNotifyView("设置成功!你的密码是:"+finalPassWord);
+                        var goToPage = locaDBManager.getDataByKey(keyPassWordFinishPage);
+                        //校验成功
+                        window.plugins.nativepagetransitions.fade({
+                                // the defaults for direction, duration, etc are all fine
+                                "href": goToPage
+                            }, function (msg) {
+                                htmlUtil.showNotifyView("设置成功!你的密码是:"+finalPassWord);
+                                console.log("success: " + msg)
+                            }, // called when the animation has finished
+                            function (msg) {
+                                alert("error: " + msg)
+                                // called in case you pass in weird values;
+                            });
                     });
                 }else {
                     htmlUtil.showNotifyView("请输入4位数密码!");

@@ -204,6 +204,14 @@ module.exports = [
         "clobbers": [
             "cordova.plugins.fileOpener2"
         ]
+    },
+    {
+        "file": "plugins/com.jjdltc.cordova.plugin.zip/www/JJzip.js",
+        "id": "com.jjdltc.cordova.plugin.zip.JJzip",
+        "pluginId": "com.jjdltc.cordova.plugin.zip",
+        "clobbers": [
+            "JJzip"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -215,7 +223,8 @@ module.exports.metadata =
     "cordova-plugin-file": "4.3.2",
     "com.telerik.plugins.nativepagetransitions": "0.6.5",
     "cordova-plugin-zip": "3.1.0",
-    "cordova-plugin-file-opener2": "2.0.9"
+    "cordova-plugin-file-opener2": "2.0.9",
+    "com.jjdltc.cordova.plugin.zip": "0.0.4"
 }
 // BOTTOM OF METADATA
 });

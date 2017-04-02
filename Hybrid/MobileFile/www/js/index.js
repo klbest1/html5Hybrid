@@ -229,6 +229,7 @@ function isPassive() {
             });
 
             $('#safeBox').on('click',function () {
+                locaDBManager.saveData(keyPassWordFinishPage,'safeBox.html');
                 window.plugins.nativepagetransitions.fade({
                         // the defaults for direction, duration, etc are all fine
                         "href": "password.html"
@@ -282,6 +283,37 @@ function isPassive() {
 
             $('#deleteFile').on('click', function () {
                 $('#operatorConsult').addClass('operator-consult-up');
+            });
+
+            $('#moveToSafeBox').on('click',function () {
+                //检查是否有密码
+                 fileDealer.getDataFromFile(fileDealer.fileType.userData,
+                    keyUserPassword,
+                    function (password) {
+                        //设置了密码
+                        if(password.length == 4){
+                            var entries = getChosedEntries();
+                            //移动到宝箱
+                            entries.forEach(function (item,index) {
+                                fileDealer.moveToDirectory(item,fileDealer.fileType.safeBox,function (newEntry) {
+                                    //压缩文件
+                                    zip.unzip()
+                                });
+                            });
+                        }else {
+                            locaDBManager.saveData(keyPassWordFinishPage,'index.html');
+                            window.plugins.nativepagetransitions.fade({
+                                    // the defaults for direction, duration, etc are all fine
+                                    "href": "password.html"
+                                }, function (msg) {
+                                    console.log("success: " + msg)
+                                }, // called when the animation has finished
+                                function (msg) {
+                                    alert("error: " + msg)
+                                } // called in case you pass in weird values;
+                            );
+                        }
+                    });
             });
 
             $('#operator-confirm').on('click', function () {

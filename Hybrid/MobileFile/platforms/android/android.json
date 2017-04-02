@@ -31,6 +31,10 @@
                         {
                             "xml": "<feature name=\"FileOpener2\"><param name=\"android-package\" value=\"io.github.pwlin.cordova.plugins.fileopener2.FileOpener2\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"JJzip\"><param name=\"android-package\" value=\"com.jjdltc.cordova.plugin.zip.JJzip\" /></feature>",
+                            "count": 1
                         }
                     ],
                     "/widget": [
@@ -84,6 +88,9 @@
             "PACKAGE_NAME": "io.cordova.hellocordova"
         },
         "cordova-plugin-file-opener2": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "com.jjdltc.cordova.plugin.zip": {
             "PACKAGE_NAME": "io.cordova.hellocordova"
         }
     },
@@ -267,6 +274,13 @@
             "clobbers": [
                 "cordova.plugins.fileOpener2"
             ]
+        },
+        {
+            "file": "plugins/com.jjdltc.cordova.plugin.zip/www/JJzip.js",
+            "id": "com.jjdltc.cordova.plugin.zip.JJzip",
+            "clobbers": [
+                "JJzip"
+            ]
         }
     ],
     "plugin_metadata": {
@@ -276,6 +290,7 @@
         "cordova-plugin-file": "4.3.2",
         "com.telerik.plugins.nativepagetransitions": "0.6.5",
         "cordova-plugin-zip": "3.1.0",
-        "cordova-plugin-file-opener2": "2.0.9"
+        "cordova-plugin-file-opener2": "2.0.9",
+        "com.jjdltc.cordova.plugin.zip": "0.0.4"
     }
 }

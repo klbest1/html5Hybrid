@@ -4,7 +4,8 @@
 
 function FileDealer() {
     this.fileType = {
-        userData: "mobile.data"
+        userData: "mobile.data",
+        safeBox:'safeBox'
     };
     this.key = '&@^$*@&$JGG(#$$&#$';
 }
@@ -191,3 +192,21 @@ FileDealer.prototype.getDataFromFile = function (fileType, key, callBack) {
     window.resolveLocalFileSystemURL(cordova.file.dataDirectory, onInitFs, errorHandler);
 };
 
+/**
+ *
+ * 移动到文件夹
+ * */
+FileDealer.prototype.moveToDirectory = function (originEntry,destinationPath,callBack) {
+    var onInitFs = function (fs) {
+        fs.root.getDirectory(destinationPath, {create: true}, function(dirEntry) {
+            originEntry.moveTo(dirEntry, null, function (newEntry) {
+                callBack(newEntry);
+            }, function (error) {
+                htmlUtil.showNotifyView(error);
+            });
+        }, errorHandler);
+    };
+    //写入到sandBox中.....
+    window.resolveLocalFileSystemURL(cordova.file.dataDirectory, onInitFs, errorHandler);
+
+};
