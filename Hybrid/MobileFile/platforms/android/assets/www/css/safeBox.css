@@ -276,7 +276,7 @@ ul, li {
   bottom: 60px;
   left: 0;
   width: 100%;
-  background: #ccc;
+  background: rgba(204, 204, 204, 0.65);
   overflow: hidden; }
 
 .listContainer {
@@ -284,18 +284,19 @@ ul, li {
   top: 0;
   height: 2000px;
   transform: translateZ(0);
-  overflow: auto; }
+  overflow: auto;
+  width: 43rem; }
 
 .listItem {
   display: block;
   float: left;
-  width: 10rem;
-  height: 10rem; }
+  width: 20rem;
+  height: 20rem; }
 
 .listItemSkin {
   background-color: #fafafa;
-  border-right: 1px solid #ccc;
-  border-bottom: 1px solid #ccc; }
+  border-right: 1rem solid rgba(0, 0, 0, 0.4);
+  border-bottom: 1rem solid rgba(0, 0, 0, 0.4); }
 
 .operator {
   z-index: 2; }
@@ -322,21 +323,45 @@ body {
 
 .icon {
   position: absolute;
-  width: 4rem;
-  height: 4rem;
+  width: 10rem;
+  height: 10rem;
   top: 1.5rem;
-  left: 3rem;
+  left: 5rem;
   margin: 0; }
 
 .label {
   position: absolute;
-  top: 6rem;
   left: 0.5rem;
   right: 0.5rem;
   bottom: 0;
   margin: 0;
   text-align: center;
   height: 4rem;
-  line-height: 4rem; }
+  line-height: 2rem;
+  word-break: break-all; }
+
+.audio {
+  background: url("../img/audio.png") no-repeat center;
+  background-size: 10rem; }
+
+.image {
+  background: url("../img/image.png") no-repeat center;
+  background-size: 10rem; }
+
+.office {
+  background: url("../img/office.png") no-repeat center;
+  background-size: 10rem; }
+
+.pdf {
+  background: url("../img/pdf.png") no-repeat center;
+  background-size: 10rem 11rem; }
+
+.ppt {
+  background: url("../img/ppt.png") no-repeat center;
+  background-size: 10rem; }
+
+.video {
+  background: url("../img/video.png") no-repeat center;
+  background-size: 10rem; }
 
 /*# sourceMappingURL=safeBox.css.map */

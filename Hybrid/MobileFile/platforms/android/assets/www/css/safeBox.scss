@@ -2,8 +2,9 @@
 
 $headHight: 64px;
 $operatorHight: 60px;
-$listItemWidth:10rem;
+$listItemWidth:20rem;
 $iconTop: 1.5rem;
+$iconWidth:10rem;
 $labelTop:$iconTop + $iconWidth + 0.5rem;
 
 
@@ -14,7 +15,7 @@ $labelTop:$iconTop + $iconWidth + 0.5rem;
   bottom: $operatorHight;
   left: 0;
   width: 100%;
-  background: #ccc;
+  background: rgba(204, 204, 204, 0.65);
   overflow: hidden;
 }
 
@@ -24,19 +25,20 @@ $labelTop:$iconTop + $iconWidth + 0.5rem;
   height: 2000px;
   transform: translateZ(0);
   overflow: auto;
+  width: 43rem;
 }
 
 .listItem {
   display: block;
   float: left;
-  width: 10rem;
-  height: 10rem;
+  width: $listItemWidth;
+  height: $listItemWidth;
 }
 
 .listItemSkin {
   background-color: #fafafa;
-  border-right: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
+  border-right: 1rem solid rgba(0,0,0,0.4);
+  border-bottom: 1rem solid rgba(0,0,0,0.4);
 }
 
 .operator {
@@ -78,12 +80,41 @@ body {
 
 .label{
   position: absolute;
-  top:$labelTop;
   left: 0.5rem;
   right: 0.5rem;
   bottom: 0;
   margin: 0;
   text-align: center;
-  height: $listItemWidth - $labelTop;
-  line-height: $listItemWidth - $labelTop;
+  height: 4rem;
+  line-height: 2rem;
+  word-break: break-all;
+}
+
+.audio{
+  background: url("../img/audio.png") no-repeat center;
+  background-size: $iconWidth;
+}
+.image{
+  background: url("../img/image.png") no-repeat center;
+  background-size: $iconWidth;
+}
+
+.office{
+  background: url("../img/office.png") no-repeat center;
+  background-size: $iconWidth;
+}
+
+.pdf{
+  background: url("../img/pdf.png") no-repeat center;
+  background-size: $iconWidth 11rem;
+}
+
+.ppt{
+  background: url("../img/ppt.png") no-repeat center;
+  background-size: $iconWidth;
+}
+
+.video{
+  background: url("../img/video.png") no-repeat center;
+  background-size: $iconWidth;
 }
