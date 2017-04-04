@@ -32,11 +32,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="safeBox.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="safeBox.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/www/js/UI-JS/safeBox.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
-              <caret line="119" column="57" selection-start-line="119" selection-start-column="57" selection-end-line="119" selection-end-column="57" />
+            <state relative-caret-position="432">
+              <caret line="119" column="118" selection-start-line="119" selection-start-column="118" selection-end-line="119" selection-end-column="118" />
               <folding />
             </state>
           </provider>
@@ -85,11 +85,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="safeBox.scss" pinned="false" current-in-tab="true">
+      <file leaf-file-name="safeBox.scss" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/css/safeBox.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-353">
-              <caret line="182" column="81" selection-start-line="182" selection-start-column="81" selection-end-line="182" selection-end-column="81" />
+            <state relative-caret-position="175">
+              <caret line="102" column="51" selection-start-line="102" selection-start-column="51" selection-end-line="102" selection-end-column="51" />
               <folding />
             </state>
           </provider>
@@ -168,8 +168,8 @@
         <option value="$PROJECT_DIR$/www/js/UI-JS/index.js" />
         <option value="$PROJECT_DIR$/www/safeBox.html" />
         <option value="$PROJECT_DIR$/www/css/safeBox.css" />
-        <option value="$PROJECT_DIR$/www/js/UI-JS/safeBox.js" />
         <option value="$PROJECT_DIR$/www/css/safeBox.scss" />
+        <option value="$PROJECT_DIR$/www/js/UI-JS/safeBox.js" />
       </list>
     </option>
   </component>
@@ -186,7 +186,7 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="259" />
+    <option name="x" value="254" />
     <option name="y" value="23" />
     <option name="width" value="1235" />
     <option name="height" value="777" />
@@ -672,15 +672,15 @@
       <workItem from="1491118565650" duration="7898000" />
       <workItem from="1491182352322" duration="14275000" />
       <workItem from="1491213390188" duration="4891000" />
-      <workItem from="1491296409386" duration="7769000" />
+      <workItem from="1491296409386" duration="8546000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="80439000" />
+    <option name="totallyTimeSpent" value="81216000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="259" y="23" width="1235" height="777" extended-state="0" />
+    <frame x="254" y="23" width="1235" height="777" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1070,18 +1070,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/UI-JS/safeBox.js">
+    <entry file="file://$PROJECT_DIR$/www/css/safeBox.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="119" column="57" selection-start-line="119" selection-start-column="57" selection-end-line="119" selection-end-column="57" />
+        <state relative-caret-position="175">
+          <caret line="102" column="51" selection-start-line="102" selection-start-column="51" selection-end-line="102" selection-end-column="51" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/css/safeBox.scss">
+    <entry file="file://$PROJECT_DIR$/www/js/UI-JS/safeBox.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-353">
-          <caret line="182" column="81" selection-start-line="182" selection-start-column="81" selection-end-line="182" selection-end-column="81" />
+        <state relative-caret-position="432">
+          <caret line="119" column="118" selection-start-line="119" selection-start-column="118" selection-end-line="119" selection-end-column="118" />
           <folding />
         </state>
       </provider>
