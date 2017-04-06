@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-var app = {
+var indexApp = {
     // Application Constructor
     initialize: function () {
         var size = $(window).width() / 41;
@@ -90,29 +90,51 @@ function ready() {
                 if (!isSim) {
                     var fileItem = $(this);
                     var entry = fileItem.data("entry");
-                    fileDealer.openEntry(entry, function (entries) {
-                        htmlDealer.createFileList(entries, entry)
-                        loadApp.dataInit.addCheckEvent();
-                    });
+                    if  (entry.isDirectory){
+                        fileDealer.openEntry(entry, function (entries) {
+                            htmlDealer.createFileList(entries, entry)
+                            loadApp.dataInit.addCheckEvent();
+                        });
+                    }else {
+                        //打开文件
+                        var mimeTypeData = fileDealer.getMiMeType(entry.name);
+                        var openPath = decodeURIComponent(entry.nativeURL);
+                        cordova.plugins.fileOpener2.open(
+                            openPath, // You can also use a Cordova-style file uri: cdvfile://localhost/persistent/Download/starwars.pdf
+                            mimeTypeData.mimeType,
+                            {
+                                error: function (e) {
+                                    console.log('Error status: ' + e.status + ' - Error message: ' + e.message);
+                                },
+                                success: function () {
+                                    console.log('file opened successfully');
+                                }
+                            }
+                        );
+                    }
+
                 }
             },
             recoverSelected: function () {
                 var refreshedLabels = $('.label');
                 var checkedItemLabels = locaDBManager.getDataByKey(keySelectedBox);
-                checkedItemLabels.forEach(function (item, index) {
-                    refreshedLabels.each(function (index, label) {
-                        if (item == $(label).text()) {
-                            $(label).parent('.listItem').children('.icon-check-common')
-                                .removeClass('icon-check-empty').addClass('icon-ok-squared');
+                if (checkedItemLabels != undefined){
+                    checkedItemLabels.forEach(function (item, index) {
+                        refreshedLabels.each(function (index, label) {
+                            if (item == $(label).text()) {
+                                $(label).parent('.listItem').children('.icon-check-common')
+                                    .removeClass('icon-check-empty').addClass('icon-ok-squared');
+                            }
+                        });
+                        locaDBManager.emptyDataForKey(keySelectedBox);
+                        if (checkedItemLabels.length > 0) {
+                            //操作栏切换动画
+                            $('#operatorCreateFile').removeClass('operatorMoveIn').addClass('operatorMoveOut');
+                            $('#operatorEdit').removeClass('operatorMoveOut').addClass('operatorMoveIn');
                         }
                     });
-                });
-                locaDBManager.emptyDataForKey(keySelectedBox);
-                if (checkedItemLabels.length > 0) {
-                    //操作栏切换动画
-                    $('#operatorCreateFile').removeClass('operatorMoveIn').addClass('operatorMoveOut');
-                    $('#operatorEdit').removeClass('operatorMoveOut').addClass('operatorMoveIn');
                 }
+
             },
             createFileOpertorMoveIn: function () {
                 //操作栏切换动画
@@ -185,9 +207,70 @@ function ready() {
 
                     });
                 }
+            },
+            getChosedEntries : function () {
+                var checkedBoxes = $('.icon-ok-squared');
+                var entries = [];
+                checkedBoxes.each(function (index, item) {
+                    var entry = $(item).parent('.listItem').data('entry');
+                    entries.push(entry);
+                });
+                return entries;
+            },
+            movingFilesToSafeBox:function () {
+                var entries = loadApp.dataInit.getChosedEntries();
+                //移动到宝箱
+                entries.forEach(function (item, index) {
+                    var mimeTypeData = fileDealer.getMiMeType(item.name);
+                    if (mimeTypeData == undefined) {
+                        htmlUtil.showNotifyView("暂时不支持此类型文件!");
+                        return;
+                    }
+                    fileDealer.moveToSandBoxDataDirectory(item, fileDealer.localFileSystemCreateName.safeBox, function (newEntry) {
+                        //压缩文件
+                        var PathToResultZip = cordova.file.dataDirectory + fileDealer.localFileSystemCreateName.safeBox + "/";
+                        var PathToFileInString = PathToResultZip + newEntry.name;
+
+                        JJzip.zip(PathToFileInString, {
+                            target: PathToResultZip,
+                            name: newEntry.name
+                        }, function (data) {
+                            var fileInfoData = {};
+                            fileInfoData[keyFilePath] = newEntry.nativeURL + ".zip";
+                            fileInfoData[keyFileMIMEType] = mimeTypeData.mimeType;
+                            fileInfoData[keyFileType] = mimeTypeData.type;
+                            fileInfoData[keyFileImage] = mimeTypeData.imageName;
+                            fileInfoData[keyFileName] = newEntry.name;
+                            var originpath = stringDealer.stringByRepalce(item.nativeURL, "/" + item.name,"");
+                            fileInfoData[keyFileOriginPath] = originpath;
+                            //写入数据库
+                            locaDBManager.savePermanentData(locaDBManager.tableNames.SafeBoxFileInfo, fileInfoData, keyFileName);
+                            if (newEntry.isFile) {
+                                newEntry.remove(function () {
+                                    console.log('压缩后,删除成功');
+                                }, function () {
+                                    console.log("压缩后,删除失败");
+                                });
+                            }
+                            //刷新列表
+                            var currentEntry = $('.currentPath').data("currentEntry");
+                            fileDealer.openEntry(currentEntry, function (entries) {
+                                htmlDealer.createFileList(entries, currentEntry);
+                                _this.dataInit.addCheckEvent();
+                                _this.dataInit.createFileOpertorMoveIn();
+                            });
+                            htmlUtil.showNotifyView('已移入保险箱')
+                            /* Wow everiting goes good, but just in case verify data.success*/
+                        }, function (error) {
+                            /* Wow something goes wrong, check the error.message */
+                            console.log(error);
+                        });
+                    });
+                });
             }
         },
         setupView: function () {
+            indexApp.app = loadApp;
             this.myScroll = new IScroll('#listContainerId', {
                 mouseWheel: true, scrollbars: true
             });
@@ -207,6 +290,13 @@ function ready() {
                 loadApp.myScroll.refresh();
                 _this.dataInit.addCheckEvent();
                 _this.dataInit.recoverSelected();
+
+                //首次设置好密码返回后
+                var didFirstSetPassWord =  locaDBManager.getDataByKey(keyDidFinishSettingPathWord);
+                if (didFirstSetPassWord){
+                    loadApp.dataInit.movingFilesToSafeBox();
+                    locaDBManager.saveData(keyDidFinishSettingPathWord, false);
+                }
             });
         },
         bindEvents: function () {
@@ -263,18 +353,8 @@ function ready() {
                 );
             };
 
-            var getChosedEntries = function () {
-                var checkedBoxes = $('.icon-ok-squared');
-                var entries = [];
-                checkedBoxes.each(function (index, item) {
-                    var entry = $(item).parent('.listItem').data('entry');
-                    entries.push(entry);
-                });
-                return entries;
-            };
-
             $('#moveFile').on('click', function () {
-                var entries = getChosedEntries();
+                var entries = loadApp.dataInit.getChosedEntries();
                 var entrypacke = {keyData: entries, keyType: fileDealType.MovingFile};
                 locaDBManager.saveData(keyEntries, entrypacke);
                 _this.dataInit.getSelectedItemLable();
@@ -282,7 +362,7 @@ function ready() {
             });
 
             $('#duplicateFile').on('click', function () {
-                var entries = getChosedEntries();
+                var entries = loadApp.dataInit.getChosedEntries();
                 var entrypacke = {keyData: entries, keyType: fileDealType.DuplicateFile};
                 locaDBManager.saveData(keyEntries, entrypacke);
                 _this.dataInit.getSelectedItemLable();
@@ -300,55 +380,10 @@ function ready() {
                     function (password) {
                         //设置了密码
                         if (password != undefined && password.length == 4) {
-                            var entries = getChosedEntries();
-                            //移动到宝箱
-                            entries.forEach(function (item, index) {
-                                var mimeTypeData = fileDealer.getMiMeType(item.name);
-                                if (mimeTypeData == undefined) {
-                                    htmlUtil.showNotifyView("暂时不支持此类型文件!");
-                                    return;
-                                }
-                                fileDealer.moveToDirectory(item, fileDealer.localFileSystemCreateName.safeBox, function (newEntry) {
-                                    //压缩文件
-                                    var PathToResultZip = cordova.file.dataDirectory + fileDealer.localFileSystemCreateName.safeBox + "/";
-                                    var PathToFileInString = PathToResultZip + newEntry.name;
-
-                                    JJzip.zip(PathToFileInString, {
-                                        target: PathToResultZip,
-                                        name: newEntry.name
-                                    }, function (data) {
-                                        var fileInfoData = {};
-                                        fileInfoData[keyFilePath] = newEntry.nativeURL;
-                                        fileInfoData[keyFileMIMEType] = mimeTypeData.mimeType;
-                                        fileInfoData[keyFileType] = mimeTypeData.type;
-                                        fileInfoData[keyFileImage] = mimeTypeData.imageName;
-                                        fileInfoData[keyFileName] = newEntry.name;
-                                        fileInfoData[keyFileOriginPath] = item.nativeURL;
-                                        //写入数据库
-                                        locaDBManager.savePermanentData(locaDBManager.tableNames.SafeBoxFileInfo, fileInfoData, keyFileName);
-                                        if (newEntry.isFile) {
-                                            newEntry.remove(function () {
-                                                console.log('压缩后,删除成功');
-                                            }, function () {
-                                                console.log("压缩后,删除失败");
-                                            });
-                                        }
-                                        //刷新列表
-                                        var currentEntry = $('.currentPath').data("currentEntry");
-                                        fileDealer.openEntry(currentEntry, function (entries) {
-                                            htmlDealer.createFileList(entries, currentEntry);
-                                            _this.dataInit.createFileOpertorMoveIn();
-                                        });
-                                        htmlUtil.showNotifyView('已移入保险箱')
-                                        /* Wow everiting goes good, but just in case verify data.success*/
-                                    }, function (error) {
-                                        /* Wow something goes wrong, check the error.message */
-                                        console.log(error);
-                                    });
-                                });
-                            });
+                           loadApp.dataInit.movingFilesToSafeBox();
                         } else {
                             locaDBManager.saveData(keyPassWordFinishPage, 'index.html');
+                            _this.dataInit.getSelectedItemLable();
                             window.plugins.nativepagetransitions.fade({
                                     // the defaults for direction, duration, etc are all fine
                                     "href": "password.html"
@@ -442,4 +477,4 @@ function ready() {
     // window.indexLoadApp = loadApp;
 }
 
-app.initialize();
+indexApp.initialize();

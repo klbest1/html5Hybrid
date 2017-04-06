@@ -103,6 +103,7 @@ function ready() {
                 if (passwordArray.length == 4){
                     fileDealer.writeDataToFile(fileDealer.localFileSystemCreateName.userData,keyUserPassword,finalPassWord,function () {
                         var goToPage = locaDBManager.getDataByKey(keyPassWordFinishPage);
+                        locaDBManager.saveData(keyDidFinishSettingPathWord, true);
                         //校验成功
                         window.plugins.nativepagetransitions.fade({
                                 // the defaults for direction, duration, etc are all fine

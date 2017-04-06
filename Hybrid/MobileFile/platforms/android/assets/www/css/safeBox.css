@@ -481,4 +481,30 @@ body {
 .opening-cancel-button-skin:active {
   background: lightgray; }
 
+.safe-menu-wrapper {
+  position: absolute;
+  top: 64px;
+  right: 0;
+  height: 80px;
+  z-index: 9;
+  display: none; }
+
+.safe-menu-show {
+  display: block;
+  opacity: 1;
+  transition: opacity 0.25s ease-in-out; }
+
+.safe-menu-container-skin {
+  background: white; }
+
+.safe-menu-list-item {
+  position: relative;
+  height: 40px;
+  line-height: 40px;
+  width: 100px; }
+
+.safe-menu-list-item-skin {
+  border: 1px solid lightgray;
+  text-align: center; }
+
 /*# sourceMappingURL=safeBox.css.map */

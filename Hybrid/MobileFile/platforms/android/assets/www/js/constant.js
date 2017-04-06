@@ -3,6 +3,7 @@
  */
 var keyEntries = "entries";
 var keyPassWordFinishPage = "passWordBackPage";
+var keyDidFinishSettingPathWord = 'finishSetPassword';
 var fileDealType = {
     "MovingFile":0,
     "DuplicateFile":1

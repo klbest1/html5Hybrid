@@ -103,9 +103,28 @@ HtmlDealer.prototype = {
     },
     gotoNextDirectory:function (fileItem) {
         var entry = fileItem.data("entry");
-        fileDealer.openEntry(entry, function (entries) {
-            htmlDealer.createFileList(entries, entry);
-        });
+        if  (entry.isDirectory){
+            fileDealer.openEntry(entry, function (entries) {
+                htmlDealer.createFileList(entries, entry)
+                indexApp.app.dataInit.addCheckEvent();
+            });
+        }else {
+            //打开文件
+            var mimeTypeData = fileDealer.getMiMeType(entry.name);
+            var openPath = decodeURIComponent(entry.nativeURL);
+            cordova.plugins.fileOpener2.open(
+                openPath, // You can also use a Cordova-style file uri: cdvfile://localhost/persistent/Download/starwars.pdf
+                mimeTypeData.mimeType,
+                {
+                    error: function (e) {
+                        console.log('Error status: ' + e.status + ' - Error message: ' + e.message);
+                    },
+                    success: function () {
+                        console.log('file opened successfully');
+                    }
+                }
+            );
+        }
     }
 };
 

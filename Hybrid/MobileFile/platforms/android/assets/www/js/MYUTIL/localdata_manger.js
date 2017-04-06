@@ -160,5 +160,16 @@ var locaDBManager =  (function () {
         return allDataArray;
     };
 
+    me.removeDataFromTable = function (tableName,dataNeedRemove,id) {
+      if (checkData(tableName)) {
+          if (checkData(id)){
+              var  permanentCollection = me.tableCollections[tableName];
+              var queryObject = {};
+              queryObject[id] = dataNeedRemove[id];
+              permanentCollection.findAndRemove(queryObject);
+              db.save();
+          }
+      }
+    };
     return me;
 })();

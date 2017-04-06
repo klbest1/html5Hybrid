@@ -87,7 +87,7 @@ FileDealer.prototype.openSDCard = function (callBack) {
         });
     }
 
-    window.resolveLocalFileSystemURI(cordova.file.externalRootDirectory, onInitFs, errorHandler);
+    window.resolveLocalFileSystemURL(cordova.file.externalRootDirectory, onInitFs, errorHandler);
 };
 
 //将文件和文件夹分离
@@ -203,12 +203,21 @@ FileDealer.prototype.getDataFromFile = function (fileName, key, callBack) {
     window.resolveLocalFileSystemURL(cordova.file.dataDirectory, onInitFs, errorHandler);
 };
 
+FileDealer.prototype.getFileEntryWithPath = function (path,callBack) {
+    function onInitFs(entry) {
+        // fileDataDiretoryEntry.getFile();
+        callBack(entry);
+    }
+    window.resolveLocalFileSystemURI(path, onInitFs, errorHandler);
+};
+
 /**
  *
- * 移动到文件夹
+ * 移动到Sandbox中的文件夹
  * */
-FileDealer.prototype.moveToDirectory = function (originEntry, destinationPath, callBack) {
+FileDealer.prototype.moveToSandBoxDataDirectory = function (originEntry, destinationPath, callBack) {
     var onInitFs = function (fs) {
+        console.log(cordova.file.dataDirectory);
         fs.getDirectory(destinationPath, {create: true}, function (dirEntry) {
             originEntry.moveTo(dirEntry, null, function (newEntry) {
                 callBack(newEntry);
@@ -227,9 +236,10 @@ FileDealer.prototype.moveToDirectory = function (originEntry, destinationPath, c
  * 删除文件夹
  * **/
 
-FileDealer.prototype.deleteFile =function (path) {
+FileDealer.prototype.deleteFile =function (path,callBack) {
     var removeSuccess = function () {
         console.log("删除成功!" + path);
+        callBack(true);
     };
     var removeFailed = function (error) {
         console.log('删除失败' + path);

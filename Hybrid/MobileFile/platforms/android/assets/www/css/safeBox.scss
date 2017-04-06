@@ -6,7 +6,8 @@ $listItemWidth:20rem;
 $iconTop: 1.5rem;
 $iconWidth:10rem;
 $labelTop:$iconTop + $iconWidth + 0.5rem;
-
+$menuItemHight:40px;
+$menuHight: $menuItemHight * 2;
 
 #wrapper {
   position: absolute;
@@ -256,4 +257,35 @@ body {
 }
 .opening-cancel-button-skin:active{
   background: lightgray;
+}
+
+.safe-menu-wrapper{
+  position: absolute;
+  top:$headHight;
+  right: 0;
+  height: $menuHight;
+  z-index: 9;
+  display: none;
+}
+
+.safe-menu-show{
+  display: block;
+  opacity: 1;
+  transition: opacity 0.25s ease-in-out;
+}
+
+.safe-menu-container-skin{
+  background: white;
+}
+
+.safe-menu-list-item{
+  position: relative;
+  height: $menuItemHight;
+  line-height: $menuItemHight;
+  width: 100px;
+}
+
+.safe-menu-list-item-skin{
+  border: 1px solid lightgray;
+  text-align: center;
 }

@@ -79,6 +79,8 @@ function isPassive() {
 function ready() {
     var safeBoxsData = [];
     var isCanceledUnzip = false;
+    var targetPath = cordova.file.externalDataDirectory + "com.mobileFile.UnzipedFiles";
+
     var loadApp = {
         setScreen: function () {
             // var size = $(window).width() / 41;
@@ -90,17 +92,15 @@ function ready() {
                 var isSim = device.isVirtual;
                 var fileItem = $(this);
                 var safeData = fileItem.data(keySafeData);
-                var zipedPath = safeData[keyFilePath] + ".zip";
+                var zipedPath = safeData[keyFilePath];
                 //先解压
-                var targetPath = cordova.file.externalDataDirectory + "com.mobileFile.UnzipedFiles";
-
                 zip.unzip(zipedPath, targetPath, function (code) {
                     if (code == 0) {
                         console.log('success');
                         // var fileNeedOpenPath = stringDealer.stringByRepalce(targetPath,'file:///','/');
                         var fileNeedOpenPath = targetPath + "/" + safeData[keyFileName];
                         fileNeedOpenPath = decodeURIComponent(fileNeedOpenPath);
-                        if (!isCanceledUnzip){
+                        if (!isCanceledUnzip) {
                             //打开文件
                             cordova.plugins.fileOpener2.open(
                                 fileNeedOpenPath, // You can also use a Cordova-style file uri: cdvfile://localhost/persistent/Download/starwars.pdf
@@ -114,7 +114,7 @@ function ready() {
                                     }
                                 }
                             );
-                        }else {
+                        } else {
                             isCanceledUnzip = false;
                             //删除文件
                             fileDealer.deleteFile(cordova.file.externalDataDirectory + "com.mobileFile.UnzipedFiles");
@@ -122,14 +122,14 @@ function ready() {
                     }
                 }, function (progressEvent) {
                     var progress = Math.round((progressEvent.loaded / progressEvent.total) * 100);
-                    var cssString =  progress + '%';
-                    var sizeString = (progressEvent.loaded/ 1024).toFixed(2) +'MB' + '/' + (progressEvent.total/1024).toFixed(2) + "MB";
+                    var cssString = progress + '%';
+                    var sizeString = (progressEvent.loaded / 1024).toFixed(2) + 'MB' + '/' + (progressEvent.total / 1024).toFixed(2) + "MB";
                     $('#opening-process-wrapper').show();
                     $('#opening-filename').text(safeData[keyFileName]);
                     $('#opening-percentage').text(cssString);
                     $('#opening-size').text(sizeString);
-                    $('#opening-process-line-incresing').css('width',cssString);
-                    if(progress == 100){
+                    $('#opening-process-line-incresing').css('width', cssString);
+                    if (progress == 100) {
                         $('#opening-process-wrapper').hide();
                     }
                     console.log("progress:" + progress + "%");
@@ -228,7 +228,7 @@ function ready() {
                         "href": "index.html",
                         "direction": "right" // 'left|right|up|down', default 'left' (which is like 'next')
                     }, function (msg) {
-                        console.log("success: " + msg)
+                        console.log("success: " + msg);
                         success();
                     }, // called when the animation has finished
                     function (msg) {
@@ -237,17 +237,108 @@ function ready() {
                 );
             };
 
-            //添加点击事件
-            $('.list').on("click", ".listItem", 0, _this.dataInit.listItemClickFun);
+            var getSelectedFileData = function () {
+                var selectedDatas = [];
+                $('.icon-ok-squared').each(function (index, item) {
+                    var data = $(item).parent('.listItem').data(keySafeData);
+                    selectedDatas.push(data);
+                });
+                return selectedDatas;
+            };
 
-            $('#myFile').on('click', function () {
+            $('#safe-right-itemoneID').unbind('click').on('click', function () {
+                $('#safe-menu-wrapper').toggleClass('safe-menu-show');
+                //  console.log('点击');
+            });
+            //添加点击事件
+            $('.list').unbind('click').on("click", ".listItem", 0, _this.dataInit.listItemClickFun);
+
+            $('#myFile').unbind('click').on('click', function () {
                 backToHome();
             });
 
-            $('#opening-cancel-button').on('click',function () {
-               $('#opening-process-wrapper').hide();
+            $('#opening-cancel-button').unbind('click').on('click', function () {
+                $('#opening-process-wrapper').hide();
                 isCanceledUnzip = true;
             });
+
+            $('#safe-menu-delete').unbind('click').on('click', function () {
+                var selctedDatas = getSelectedFileData();
+                if (selctedDatas.length == 0) {
+                    htmlUtil.showNotifyView('请选择要删除的文件!');
+                } else {
+                    var remove = function (safeData) {
+                        fileDealer.deleteFile(safeData[keyFilePath],function (success) {
+                            removeingAll();
+                        });
+                        //移除数据库记录
+                        locaDBManager.removeDataFromTable(locaDBManager.tableNames.SafeBoxFileInfo, safeData, keyFileName);
+                    };
+
+                    var removeingAll = function () {
+                        if (selctedDatas.length == 0) {
+                            htmlUtil.showNotifyView('删除成功!');
+                            //刷新
+                            loadApp.dataInit.getSafeBoxDatas();
+                            loadApp.loadResource();
+                        } else {
+                            var safeData = selctedDatas.pop();
+                            remove(safeData);
+                        }
+                    };
+                    removeingAll();
+                }
+                ;
+            });
+
+            $('#safe-menu-backup').unbind('click').on('click', function () {
+                    var selctedDatas = getSelectedFileData();
+                    if (selctedDatas.length == 0) {
+                        htmlUtil.showNotifyView('请选择要还原的文件!');
+                    } else {
+                        var moveTo = function (safeData) {
+                            var zipedPath = safeData[keyFilePath];
+                            zip.unzip(zipedPath, targetPath, function (code) {
+                                    if (code == 0) {
+                                        // var fileNeedOpenPath = stringDealer.stringByRepalce(targetPath,'file:///','/');
+                                        var fileNeedOpenPath = targetPath + "/" + safeData[keyFileName];
+                                        fileNeedOpenPath = decodeURIComponent(fileNeedOpenPath);
+                                        fileDealer.getFileEntryWithPath(fileNeedOpenPath, function (entry) {
+                                            fileDealer.getFileEntryWithPath(safeData[keyFileOriginPath], function (destinationEntry) {
+                                                entry.moveTo(destinationEntry, null, function (moveToEntry) {
+                                                    console.log('终于他妈的移动成功了!!!');
+                                                    //移除数据库记录
+                                                    locaDBManager.removeDataFromTable(locaDBManager.tableNames.SafeBoxFileInfo, safeData, keyFileName);
+                                                    movingAll();
+                                                }, function (error) {
+                                                    console.log('移动失败!');
+                                                });
+                                            });
+
+                                        });
+                                    }
+                                }, function (error) {
+
+                                }
+                            );
+
+                        };
+
+                        var movingAll = function () {
+                            if (selctedDatas.length == 0) {
+                                htmlUtil.showNotifyView('移动成功!');
+                                //刷新
+                                loadApp.dataInit.getSafeBoxDatas();
+                                loadApp.loadResource();
+                            } else {
+                                var safeData = selctedDatas.pop();
+                                moveTo(safeData);
+                            }
+                        };
+                        movingAll();
+                    };
+                }
+            );
         },
 
         startLoadingApp: function () {
