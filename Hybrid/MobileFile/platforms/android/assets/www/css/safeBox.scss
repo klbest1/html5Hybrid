@@ -1,7 +1,7 @@
 @import 'index';
 
-$headHight: 64px;
-$operatorHight: 60px;
+$headHight: 44px;
+$operatorHight: 50px;
 $listItemWidth:20rem;
 $iconTop: 1.5rem;
 $iconWidth:10rem;
@@ -288,4 +288,5 @@ body {
 .safe-menu-list-item-skin{
   border: 1px solid lightgray;
   text-align: center;
+  font-size: 1.5rem;
 }

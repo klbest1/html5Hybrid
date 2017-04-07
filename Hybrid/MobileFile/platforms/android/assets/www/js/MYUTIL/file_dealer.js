@@ -98,7 +98,7 @@ FileDealer.prototype.sortFils = function sortEntrise(entries) {
         } else if (!a.isFile && b.isFile) {
             return -1;
         } else {
-            return a.name > b.name;
+            return a.name < b.name;
         }
     })
 };

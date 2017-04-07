@@ -32,6 +32,7 @@ var indexApp = {
         document.addEventListener('pause', this.onPause, false);
         document.addEventListener('resume', this.onResume, false);
         document.addEventListener('active', this.onActivated, false);
+        document.addEventListener("backbutton", this.onBackKeyDown, false);
 
     },
     // deviceready Event Handler
@@ -54,6 +55,9 @@ var indexApp = {
     },
     onActivated: function () {
         locaDBManager.emptyDataForKey(keySelectedBox);
+    },
+    onBackKeyDown:function () {
+        
     }
 };
 
@@ -99,18 +103,22 @@ function ready() {
                         //打开文件
                         var mimeTypeData = fileDealer.getMiMeType(entry.name);
                         var openPath = decodeURIComponent(entry.nativeURL);
-                        cordova.plugins.fileOpener2.open(
-                            openPath, // You can also use a Cordova-style file uri: cdvfile://localhost/persistent/Download/starwars.pdf
-                            mimeTypeData.mimeType,
-                            {
-                                error: function (e) {
-                                    console.log('Error status: ' + e.status + ' - Error message: ' + e.message);
-                                },
-                                success: function () {
-                                    console.log('file opened successfully');
+                        if(mimeTypeData.mimeType != undefined){
+                            cordova.plugins.fileOpener2.open(
+                                openPath, // You can also use a Cordova-style file uri: cdvfile://localhost/persistent/Download/starwars.pdf
+                                mimeTypeData.mimeType,
+                                {
+                                    error: function (e) {
+                                        console.log('Error status: ' + e.status + ' - Error message: ' + e.message);
+                                    },
+                                    success: function () {
+                                        console.log('file opened successfully');
+                                    }
                                 }
-                            }
-                        );
+                            );
+                        }else {
+                            htmlUtil.showNotifyView('暂不支持查看此文件');
+                        }
                     }
 
                 }
@@ -218,6 +226,7 @@ function ready() {
                 return entries;
             },
             movingFilesToSafeBox:function () {
+                htmlUtil.showNotifyView('正在移动文件...');
                 var entries = loadApp.dataInit.getChosedEntries();
                 //移动到宝箱
                 entries.forEach(function (item, index) {
@@ -256,10 +265,10 @@ function ready() {
                             var currentEntry = $('.currentPath').data("currentEntry");
                             fileDealer.openEntry(currentEntry, function (entries) {
                                 htmlDealer.createFileList(entries, currentEntry);
-                                _this.dataInit.addCheckEvent();
-                                _this.dataInit.createFileOpertorMoveIn();
+                                loadApp.dataInit.addCheckEvent();
+                                loadApp.dataInit.createFileOpertorMoveIn();
                             });
-                            htmlUtil.showNotifyView('已移入保险箱')
+                            htmlUtil.showNotifyView('已移入保险箱');
                             /* Wow everiting goes good, but just in case verify data.success*/
                         }, function (error) {
                             /* Wow something goes wrong, check the error.message */
@@ -308,6 +317,7 @@ function ready() {
                     fileDealer.openEntry(parentEntry, function (entries) {
                         htmlDealer.createFileList(entries, parentEntry);
                         _this.dataInit.addCheckEvent();
+                        htmlDealer.scrollToCell(currentEntry);
                     });
                 }, function (error) {
                     console.log("Error" + error);

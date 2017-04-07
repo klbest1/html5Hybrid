@@ -9,12 +9,12 @@ html, body {
   left: 0;
   right: 0;
   top: 0;
-  height: 64px;
-  line-height: 64px; }
+  height: 44px;
+  line-height: 44px; }
 
 /*命名规范笔记,笔记:内容会把父节点撑大,如果没有对父节点设置大小*/
 .headSkin {
-  background: orange;
+  background: linear-gradient(to bottom, #1D7FE2, #0865C2);
   color: white;
   text-align: center;
   font-size: large; }
@@ -28,12 +28,12 @@ html, body {
   margin: 0; }
 
 .title-skin {
-  line-height: 64px;
+  line-height: 44px;
   text-align: center; }
 
 .content {
   position: absolute;
-  top: 64px;
+  top: 44px;
   left: 0;
   right: 0;
   bottom: 0; }
@@ -56,7 +56,7 @@ html, body {
 
 .currentPathSkin {
   font-size: 2rem;
-  color: dodgerblue; }
+  color: #222 !important; }
 
 .upper {
   position: absolute;
@@ -66,7 +66,7 @@ html, body {
 
 .upperSkin {
   font-size: 2rem;
-  color: dodgerblue; }
+  color: #1D7FE2; }
 
 .upperSkin:active {
   color: lightblue; }
@@ -85,7 +85,7 @@ ul, li {
   top: 40px;
   left: 0;
   right: 0;
-  bottom: 60px;
+  bottom: 50px;
   overflow: hidden; }
 
 .templete {
@@ -105,10 +105,9 @@ ul, li {
 .icon-check-common {
   display: inline-block;
   vertical-align: middle;
-  width: 4rem;
-  margin-left: 2rem;
-  margin-right: 1rem;
-  margin-top: 0.4rem;
+  width: 7rem;
+  height: 6rem;
+  line-height: 6.5rem;
   text-align: center; }
 
 .icon-check-common {
@@ -151,29 +150,38 @@ ul, li {
   left: 0;
   right: 0;
   bottom: 0;
-  height: 60px;
+  height: 50px;
   display: flex; }
 
 .operatorSkin {
   background: ghostwhite; }
 
 .operatorEdit {
-  bottom: -60px; }
+  bottom: -50px; }
 
 .bottomLabelCommon {
-  height: 60px;
+  height: 50px;
   flex: 1;
   text-align: center; }
 
 .bottomLabelCommonSKin {
-  font-size: 2rem; }
+  font-size: 1.5rem;
+  color: white;
+  background: linear-gradient(to bottom, #0e7bef, #0d73da);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  border: 1px solid #045bb2;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);
+  outline: 0; }
 
-.bottomLabelCommonSKin:active, .bottomLabelCommonSKin:before:active {
-  background: lightgray; }
+.bottomLabelCommonSKin:active {
+  background: -webkit-gradient(linear, left top, left bottom, from(#0e7ceb), to(dodgerblue));
+  border: 1px solid #0659ac;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06), inset 0 1px 2px rgba(0, 0, 0, 0.2); }
 
 .bottomLabelCommonSKin:before {
   display: block;
-  height: 2.5rem; }
+  height: 2.5rem;
+  font-size: 20px; }
 
 .icon-plus:before {
   font-size: 3.2rem;
@@ -186,29 +194,29 @@ ul, li {
 
 .operatorMoveOut {
   animation: operatorMovOut 0.4s;
-  bottom: -60px; }
+  bottom: -50px; }
 
 .operator-consult {
-  bottom: -60px;
+  bottom: -50px;
   transition: -webkit-transform 0.3s ease-in;
   transform: translateY(0) translateZ(0); }
 
 .operator-consult-up {
-  transform: translateY(-60px) translateZ(0); }
+  transform: translateY(-50px) translateZ(0); }
 
 /***好奇怪动画跑到顶上去了,为什么????
 ***笔记 草果然引用到另外一个文件的CSS了
 **/
 @keyframes operatorMovIn {
   0% {
-    bottom: -60px; }
+    bottom: -50px; }
   100% {
     bottom: 0; } }
 @keyframes operatorMovOut {
   0% {
     bottom: 0; }
   100% {
-    bottom: -60px; } }
+    bottom: -50px; } }
 /****对话框部分CSS*/
 .dialogOverlay {
   position: absolute;
@@ -273,7 +281,7 @@ ul, li {
   position: absolute;
   z-index: 1;
   top: 0;
-  bottom: 60px;
+  bottom: 50px;
   left: 0;
   width: 100%;
   background: rgba(204, 204, 204, 0.65);
@@ -483,7 +491,7 @@ body {
 
 .safe-menu-wrapper {
   position: absolute;
-  top: 64px;
+  top: 44px;
   right: 0;
   height: 80px;
   z-index: 9;
@@ -505,6 +513,7 @@ body {
 
 .safe-menu-list-item-skin {
   border: 1px solid lightgray;
-  text-align: center; }
+  text-align: center;
+  font-size: 1.5rem; }
 
 /*# sourceMappingURL=safeBox.css.map */

@@ -32,6 +32,8 @@ var safeApp = {
         document.addEventListener('pause', this.onPause, false);
         document.addEventListener('resume', this.onResume, false);
         document.addEventListener('active', this.onActivated, false);
+        document.addEventListener("backbutton", this.onBackKeyDown, false);
+
     },
     // deviceready Event Handler
     //
@@ -53,6 +55,9 @@ var safeApp = {
     },
     onActivated: function () {
         console.log('onActivated');
+    },
+    onBackKeyDown:function () {
+
     }
 };
 
@@ -93,6 +98,12 @@ function ready() {
                 var fileItem = $(this);
                 var safeData = fileItem.data(keySafeData);
                 var zipedPath = safeData[keyFilePath];
+                var progress = 20;
+                var cssString = progress + '%';
+                $('#opening-process-wrapper').show();
+                $('#opening-percentage').text(cssString);
+                $('#opening-process-line-incresing').css('width', cssString);
+
                 //先解压
                 zip.unzip(zipedPath, targetPath, function (code) {
                     if (code == 0) {
@@ -124,8 +135,6 @@ function ready() {
                     var progress = Math.round((progressEvent.loaded / progressEvent.total) * 100);
                     var cssString = progress + '%';
                     var sizeString = (progressEvent.loaded / 1024).toFixed(2) + 'MB' + '/' + (progressEvent.total / 1024).toFixed(2) + "MB";
-                    $('#opening-process-wrapper').show();
-                    $('#opening-filename').text(safeData[keyFileName]);
                     $('#opening-percentage').text(cssString);
                     $('#opening-size').text(sizeString);
                     $('#opening-process-line-incresing').css('width', cssString);
@@ -263,6 +272,7 @@ function ready() {
             });
 
             $('#safe-menu-delete').unbind('click').on('click', function () {
+                $('#safe-menu-wrapper').toggleClass('safe-menu-show');
                 var selctedDatas = getSelectedFileData();
                 if (selctedDatas.length == 0) {
                     htmlUtil.showNotifyView('请选择要删除的文件!');
@@ -292,10 +302,12 @@ function ready() {
             });
 
             $('#safe-menu-backup').unbind('click').on('click', function () {
-                    var selctedDatas = getSelectedFileData();
+                $('#safe-menu-wrapper').toggleClass('safe-menu-show');
+                var selctedDatas = getSelectedFileData();
                     if (selctedDatas.length == 0) {
                         htmlUtil.showNotifyView('请选择要还原的文件!');
                     } else {
+                        htmlUtil.showNotifyView('正在移动文件...');
                         var moveTo = function (safeData) {
                             var zipedPath = safeData[keyFilePath];
                             zip.unzip(zipedPath, targetPath, function (code) {

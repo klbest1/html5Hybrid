@@ -29,7 +29,7 @@
         <param name="android-package" value="com.jjdltc.cordova.plugin.zip.JJzip" />
     </feature>
     <allow-intent href="market:*" />
-    <name>HelloCordova</name>
+    <name>手机文件管家</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
     </description>

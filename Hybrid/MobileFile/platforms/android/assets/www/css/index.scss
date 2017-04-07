@@ -1,4 +1,4 @@
-$headHight: 64px;
+$headHight: 44px;
 $iconWidth: 4rem;
 $naviHight: 40px;
 $listItemHight: 6rem;
@@ -6,7 +6,7 @@ $iconLeft: 2rem;
 $iconTop: ($listItemHight - $iconWidth)/2;
 $labelLeft: $iconLeft + $iconWidth + 2rem;
 $labelWidth: 15rem;
-$operatorHight: 60px;
+$operatorHight: 50px;
 
 html, body {
   -webkit-user-select: none;
@@ -26,7 +26,7 @@ html, body {
 
 /*命名规范笔记,笔记:内容会把父节点撑大,如果没有对父节点设置大小*/
 .headSkin {
-  background: orange;
+  background: linear-gradient(to bottom,#1D7FE2,#0865C2);
   color: white;
   text-align: center;
   font-size: large;
@@ -74,7 +74,7 @@ html, body {
 
 .currentPathSkin {
   font-size: 2rem;
-  color: dodgerblue;
+  color: #222!important;
 }
 
 //float 和 absolute 区别:float 布局,postion 定位
@@ -87,7 +87,7 @@ html, body {
 
 .upperSkin {
   font-size: 2rem;
-  color: dodgerblue;
+  color: #1D7FE2;
 }
 
 .upperSkin:active {
@@ -140,10 +140,9 @@ ul, li {
 .icon-check-common {
   display: inline-block;
   vertical-align: middle;
-  width: 4rem;
-  margin-left: 2rem;
-  margin-right: 1rem;
-  margin-top: 0.4rem;
+  width: 7rem;
+  height: 6rem;
+  line-height: 6.5rem;
   ///*也许是受vertical-align影响,同时定位是relative所以 text-aligncenter不能产生像绝对定位的效果*/
   text-align: center;
 }
@@ -218,16 +217,24 @@ ul, li {
 }
 
 .bottomLabelCommonSKin {
-  font-size: 2rem;
-}
+  font-size: 1.5rem;
+  color: white;
+  background: linear-gradient(to bottom,#0e7bef,#0d73da);
+  box-shadow: 0 1px 2px rgba(0,0,0,.05), inset 0 1px 1px rgba(255,255,255,.15);
+  border: 1px solid #045bb2;
+  text-shadow: 0 1px 1px rgba(0,0,0,.12);
+  outline: 0;}
 
-.bottomLabelCommonSKin:active, .bottomLabelCommonSKin:before:active {
-  background: lightgray;
+.bottomLabelCommonSKin:active {
+  background: -webkit-gradient(linear,left top,left bottom,from(#0e7ceb),to(dodgerblue));
+  border: 1px solid #0659ac;
+  box-shadow: 0 1px 0 rgba(255,255,255,.06), inset 0 1px 2px rgba(0,0,0,.2);
 }
 
 .bottomLabelCommonSKin:before {
   display: block;
   height: 2.5rem;
+  font-size: 20px;
 }
 
 .icon-plus:before {

@@ -210,6 +210,7 @@ function ready() {
                     fileDealer.openEntry(parentEntry, function (entries) {
                         htmlDealer.createFileList(entries, parentEntry);
                         _this.dataInit.addCheckEvent();
+                        htmlDealer.scrollToCell(currentEntry);
                     });
                 }, function (error) {
                     console.log("Error" + error);

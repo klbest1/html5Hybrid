@@ -1,9 +1,11 @@
 
+$notifiViewHight: 44px;
+
 /***提示view
 **/
 .notificationView {
   position: relative;
-  height: 64px;
+  height: $notifiViewHight;
   display: none;
   z-index: 999;
 }
@@ -13,13 +15,13 @@
   position: relative;
   background: rgba(0, 0, 0, 0.8);
   text-align: center;
-  height: 64px;
+  height: $notifiViewHight;
   margin: 0 auto;
 }
 
 #notifyTxt {
   color: white;
-  line-height: 64px;
+  line-height: $notifiViewHight;
   font-size: large;
 }
 
@@ -32,12 +34,12 @@
 .notificationViewMoveOut {
   animation: movOut 0.3s;
   display: block;
-  top: -64px;
+  top: -$notifiViewHight;
 }
 
 @keyframes movIn {
   0% {
-    top: -64px
+    top: -$notifiViewHight
   }
   100% {
     top: 0
@@ -49,7 +51,7 @@
     top: 0
   }
   100% {
-    top: -64px
+    top: -$notifiViewHight
   }
 }
 
@@ -69,6 +71,6 @@
 }
 
 .blink {
-  animation:fade 3000ms infinite;
-  -webkit-animation:fade 3000ms infinite;
+  animation:fade 1000ms infinite;
+  -webkit-animation:fade 1000ms infinite;
 }

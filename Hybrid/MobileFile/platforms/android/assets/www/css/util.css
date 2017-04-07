@@ -3,7 +3,7 @@
 **/
 .notificationView {
   position: relative;
-  height: 64px;
+  height: 44px;
   display: none;
   z-index: 999; }
 
@@ -11,12 +11,12 @@
   position: relative;
   background: rgba(0, 0, 0, 0.8);
   text-align: center;
-  height: 64px;
+  height: 44px;
   margin: 0 auto; }
 
 #notifyTxt {
   color: white;
-  line-height: 64px;
+  line-height: 44px;
   font-size: large; }
 
 .notificationViewMoveIn {
@@ -27,18 +27,18 @@
 .notificationViewMoveOut {
   animation: movOut 0.3s;
   display: block;
-  top: -64px; }
+  top: -44px; }
 
 @keyframes movIn {
   0% {
-    top: -64px; }
+    top: -44px; }
   100% {
     top: 0; } }
 @keyframes movOut {
   0% {
     top: 0; }
   100% {
-    top: -64px; } }
+    top: -44px; } }
 /*************闪烁
 */
 @keyframes fade {
@@ -56,7 +56,7 @@
   to {
     opacity: 1.0; } }
 .blink {
-  animation: fade 3000ms infinite;
-  -webkit-animation: fade 3000ms infinite; }
+  animation: fade 1000ms infinite;
+  -webkit-animation: fade 1000ms infinite; }
 
 /*# sourceMappingURL=util.css.map */

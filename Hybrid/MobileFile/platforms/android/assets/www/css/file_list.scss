@@ -1,5 +1,5 @@
 $backButtonWidth: 40px ;
-$headHight: 64px;
+$headHight: 44px;
 
 .listContainer{
    bottom: 0;
@@ -17,7 +17,7 @@ $headHight: 64px;
 
 /*命名规范笔记,笔记:内容会把父节点撑大,如果没有对父节点设置大小*/
 .headSkin {
-  background: orange;
+  background: linear-gradient(to bottom,#1D7FE2,#0865C2);
   color: white;
   text-align: center;
   font-size: large;
@@ -33,11 +33,11 @@ $headHight: 64px;
 /*笔记:只需要对before 只能设置字体大小,父容器设置盒子大小,让其居中,设置LineHeight和高度一样高*/
  .bar-left-item-skin:before{
    font-size: 30px;
-   color: dodgerblue;
+   color: white;
  }
 
 .bar-left-item:before:active{
-  color: lightblue;
+  color: lightgray;
 }
 
 
