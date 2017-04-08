@@ -138,7 +138,7 @@ function ready() {
                 }
             };
 
-            $('.key-number').on('click',function () {
+            var clickingNumbers = function () {
                 if (passwordArray.length < 4){
                     var userInput = $(this).text();
                     passwordArray.push(userInput);
@@ -147,28 +147,62 @@ function ready() {
                         passwordArray.forEach(function (item,index){
                             finalPassWord = finalPassWord + item;
                         });
-                       if (passwordInLocal != "" && passwordInLocal != undefined){
-                           if(passwordInLocal == finalPassWord){
-                               //校验成功
-                               window.plugins.nativepagetransitions.fade({
-                                       // the defaults for direction, duration, etc are all fine
-                                       "href": "safeBox.html"
-                                   }, function (msg) {
-                                       console.log("success: " + msg)
-                                   }, // called when the animation has finished
-                                   function (msg) {
-                                       alert("error: " + msg)
-                                   } // called in case you pass in weird values;
-                               );
-                           }else {
-                               //校验失败
-                               htmlUtil.showNotifyView("密码错误!");
-                           }
+                        if (passwordInLocal != "" && passwordInLocal != undefined){
+                            if(passwordInLocal == finalPassWord){
+                                //校验成功
+                                window.plugins.nativepagetransitions.fade({
+                                        // the defaults for direction, duration, etc are all fine
+                                        "href": "safeBox.html"
+                                    }, function (msg) {
+                                        console.log("success: " + msg)
+                                    }, // called when the animation has finished
+                                    function (msg) {
+                                        alert("error: " + msg)
+                                    } // called in case you pass in weird values;
+                                );
+                            }else {
+                                //校验失败
+                                htmlUtil.showNotifyView("密码错误!");
+                            }
                         }
                     }
                 }
+            };
+            $('#number-one').on('click',function () {
+                clickingNumbers.bind(this)();
             });
-            
+
+            $('#number-two').on('click',function () {
+                clickingNumbers.bind(this)();
+            });
+
+            $('#number-three').on('click',function () {
+                clickingNumbers.bind(this)();
+            });
+
+            $('#number-four').on('click',function () {
+                clickingNumbers.bind(this)();
+            });
+
+            $('#number-five').on('click',function () {
+                clickingNumbers.bind(this)();
+            });
+            $('#number-six').on('click',function () {
+                clickingNumbers.bind(this)();
+            });
+            $('#number-seven').on('click',function () {
+                clickingNumbers.bind(this)();
+            });
+            $('#number-eight').on('click',function () {
+                clickingNumbers.bind(this)();
+            });
+            $('#number-nine').on('click',function () {
+                clickingNumbers.bind(this)();
+            });
+            $('#number-zero').on('click',function () {
+                clickingNumbers.bind(this)();
+            });
+
             $('#findPassword').on('click',function () {
                 
             });

@@ -64,27 +64,29 @@ HtmlDealer.prototype = {
         this.myscrollView.refresh();
     },
     createSafeBoxListItem: function (safeBoxData) {
-        var listItem = $('.templete').clone().removeClass('templete').addClass('listItem').addClass('listItemSkin');
-        if (safeBoxData[keyFileType] == fileDealer.safeBoxFileType.video ) {
-            listItem.find('.icon').addClass('video');
-        } else if(safeBoxData[keyFileType] == fileDealer.safeBoxFileType.image){
-            listItem.find('.icon').addClass('image');
-        }else {
-            listItem.find('.icon').addClass(safeBoxData[keyFileImage]);
-        }
-        listItem.find('.label').text(safeBoxData[keyFileName]);
-        listItem.data(keySafeData, safeBoxData);
-        //为每个元素设置id
-        var idName = pinyin.getFullChars(safeBoxData[keyFileName]);
-        listItem.attr('id', idName);
-        //模拟器添加绑定事件,因为无法获取点击事
-        var isSim = device.isVirtual;
-        if (isSim) {
-            attachMyEvent(listItem,safeApp.app.dataInit.listItemClickFun , false);
-        }
-        $('.list').append(listItem);
+        if (safeBoxData != undefined){
+            var listItem = $('.templete').clone().removeClass('templete').addClass('listItem').addClass('listItemSkin');
+            if (safeBoxData[keyFileType] == fileDealer.safeBoxFileType.video ) {
+                listItem.find('.icon').addClass('video');
+            } else if(safeBoxData[keyFileType] == fileDealer.safeBoxFileType.image){
+                listItem.find('.icon').addClass('image');
+            }else {
+                listItem.find('.icon').addClass(safeBoxData[keyFileImage]);
+            }
+            listItem.find('.label').text(safeBoxData[keyFileName]);
+            listItem.data(keySafeData, safeBoxData);
+            //为每个元素设置id
+            var idName = pinyin.getFullChars(safeBoxData[keyFileName]);
+            listItem.attr('id', idName);
+            //模拟器添加绑定事件,因为无法获取点击事
+            var isSim = device.isVirtual;
+            if (isSim) {
+                attachMyEvent(listItem,safeApp.app.dataInit.listItemClickFun , false);
+            }
+            $('.list').append(listItem);
 
-        return listItem;
+            return listItem;
+        }
     },
     createSafeBoxFileList:function (safeBoxDatas) {
         //刷新文件列表

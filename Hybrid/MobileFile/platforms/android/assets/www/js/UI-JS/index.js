@@ -56,8 +56,8 @@ var indexApp = {
     onActivated: function () {
         locaDBManager.emptyDataForKey(keySelectedBox);
     },
-    onBackKeyDown:function () {
-        
+    onBackKeyDown: function () {
+
     }
 };
 
@@ -94,16 +94,16 @@ function ready() {
                 if (!isSim) {
                     var fileItem = $(this);
                     var entry = fileItem.data("entry");
-                    if  (entry.isDirectory){
+                    if (entry.isDirectory) {
                         fileDealer.openEntry(entry, function (entries) {
                             htmlDealer.createFileList(entries, entry)
                             loadApp.dataInit.addCheckEvent();
                         });
-                    }else {
+                    } else {
                         //打开文件
                         var mimeTypeData = fileDealer.getMiMeType(entry.name);
                         var openPath = decodeURIComponent(entry.nativeURL);
-                        if(mimeTypeData.mimeType != undefined){
+                        if (mimeTypeData.mimeType != undefined) {
                             cordova.plugins.fileOpener2.open(
                                 openPath, // You can also use a Cordova-style file uri: cdvfile://localhost/persistent/Download/starwars.pdf
                                 mimeTypeData.mimeType,
@@ -116,7 +116,7 @@ function ready() {
                                     }
                                 }
                             );
-                        }else {
+                        } else {
                             htmlUtil.showNotifyView('暂不支持查看此文件');
                         }
                     }
@@ -126,7 +126,7 @@ function ready() {
             recoverSelected: function () {
                 var refreshedLabels = $('.label');
                 var checkedItemLabels = locaDBManager.getDataByKey(keySelectedBox);
-                if (checkedItemLabels != undefined){
+                if (checkedItemLabels != undefined) {
                     checkedItemLabels.forEach(function (item, index) {
                         refreshedLabels.each(function (index, label) {
                             if (item == $(label).text()) {
@@ -149,7 +149,7 @@ function ready() {
                 $('#operatorCreateFile').removeClass('operatorMoveOut').addClass('operatorMoveIn');
                 $('#operatorEdit').removeClass('operatorMoveIn').addClass('operatorMoveOut');
             },
-            editFileOperatorMoveIn:function () {
+            editFileOperatorMoveIn: function () {
                 //操作栏切换动画
                 $('#operatorCreateFile').removeClass('operatorMoveIn').addClass('operatorMoveOut');
                 $('#operatorEdit').removeClass('operatorMoveOut').addClass('operatorMoveIn');
@@ -216,7 +216,7 @@ function ready() {
                     });
                 }
             },
-            getChosedEntries : function () {
+            getChosedEntries: function () {
                 var checkedBoxes = $('.icon-ok-squared');
                 var entries = [];
                 checkedBoxes.each(function (index, item) {
@@ -225,9 +225,17 @@ function ready() {
                 });
                 return entries;
             },
-            movingFilesToSafeBox:function () {
-                htmlUtil.showNotifyView('正在移动文件...');
+            saveCurrentEntry: function () {
+                var currentEntry = $('.currentPath').data("currentEntry");
+                if (currentEntry != undefined ) {
+                    locaDBManager.saveData(keyChosedSubDirectory, currentEntry);
+                }
+            },
+            movingFilesToSafeBox: function () {
                 var entries = loadApp.dataInit.getChosedEntries();
+                if (entries.length > 0){
+                    htmlUtil.showNotifyView('正在移动文件...');
+                }
                 //移动到宝箱
                 entries.forEach(function (item, index) {
                     var mimeTypeData = fileDealer.getMiMeType(item.name);
@@ -250,7 +258,7 @@ function ready() {
                             fileInfoData[keyFileType] = mimeTypeData.type;
                             fileInfoData[keyFileImage] = mimeTypeData.imageName;
                             fileInfoData[keyFileName] = newEntry.name;
-                            var originpath = stringDealer.stringByRepalce(item.nativeURL, "/" + item.name,"");
+                            var originpath = stringDealer.stringByRepalce(item.nativeURL, "/" + item.name, "");
                             fileInfoData[keyFileOriginPath] = originpath;
                             //写入数据库
                             locaDBManager.savePermanentData(locaDBManager.tableNames.SafeBoxFileInfo, fileInfoData, keyFileName);
@@ -292,21 +300,41 @@ function ready() {
         },
         loadResource: function () {
             var _this = this;
-            //打开sd卡目录,在回调中创建页面
-            fileDealer.openSDCard(function (entries, rootEntry) {
-                htmlDealer.myscrollView = loadApp.myScroll;
-                htmlDealer.createFileList(entries, rootEntry);
-                loadApp.myScroll.refresh();
-                _this.dataInit.addCheckEvent();
-                _this.dataInit.recoverSelected();
-
+            var movingSafeBox = function () {
                 //首次设置好密码返回后
-                var didFirstSetPassWord =  locaDBManager.getDataByKey(keyDidFinishSettingPathWord);
-                if (didFirstSetPassWord){
+                var didFirstSetPassWord = locaDBManager.getDataByKey(keyDidFinishSettingPathWord);
+                if (didFirstSetPassWord) {
                     loadApp.dataInit.movingFilesToSafeBox();
                     locaDBManager.saveData(keyDidFinishSettingPathWord, false);
                 }
-            });
+            };
+
+            var currentEntry = locaDBManager.getDataByKey(keyChosedSubDirectory);
+
+            //有打开过子目录
+            if (currentEntry != undefined ) {
+                fileDealer.getFileEntryWithPath(currentEntry.nativeURL, function (entry) {
+                    fileDealer.openEntry(entry, function (entries) {
+                        htmlDealer.myscrollView = loadApp.myScroll;
+                        htmlDealer.createFileList(entries, entry);
+                        _this.dataInit.addCheckEvent();
+                        _this.dataInit.recoverSelected();
+                        movingSafeBox();
+                        locaDBManager.emptyDataForKey(keyChosedSubDirectory);
+                    });
+                });
+
+            } else {
+                //打开sd卡目录,在回调中创建页面
+                fileDealer.openSDCard(function (entries, rootEntry) {
+                    htmlDealer.myscrollView = loadApp.myScroll;
+                    htmlDealer.createFileList(entries, rootEntry);
+                    _this.dataInit.addCheckEvent();
+                    _this.dataInit.recoverSelected();
+                    movingSafeBox();
+                });
+            }
+
         },
         bindEvents: function () {
             var _this = this;
@@ -337,6 +365,7 @@ function ready() {
             });
 
             $('#safeBox').on('click', function () {
+                loadApp.dataInit.saveCurrentEntry();
                 locaDBManager.saveData(keyPassWordFinishPage, 'safeBox.html');
                 window.plugins.nativepagetransitions.fade({
                         // the defaults for direction, duration, etc are all fine
@@ -384,13 +413,15 @@ function ready() {
             });
 
             $('#moveToSafeBox').on('click', function () {
+                //保存当前目录
+                loadApp.dataInit.saveCurrentEntry();
                 //检查是否有密码
                 fileDealer.getDataFromFile(fileDealer.localFileSystemCreateName.userData,
                     keyUserPassword,
                     function (password) {
                         //设置了密码
                         if (password != undefined && password.length == 4) {
-                           loadApp.dataInit.movingFilesToSafeBox();
+                            loadApp.dataInit.movingFilesToSafeBox();
                         } else {
                             locaDBManager.saveData(keyPassWordFinishPage, 'index.html');
                             _this.dataInit.getSelectedItemLable();
