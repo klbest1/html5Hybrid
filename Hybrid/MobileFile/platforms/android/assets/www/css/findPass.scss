@@ -1,0 +1,52 @@
+
+$headHight: 44px;
+
+.findPass-container{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+}
+
+.findPass-container-skin{
+  background-color: #686BC5;
+}
+
+.content{
+  position: absolute;
+  top: $headHight;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.question{
+  position: relative;
+  margin-top: 5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.question-skin{
+  font-size: 24px;
+  text-align: left;
+  line-height: 50px;
+  color: white;
+}
+
+.answer{
+  position: relative;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  padding-left: 10px;
+  height: 44px;
+  width: 94%;
+  box-sizing: border-box;
+}
+
+.answers-skin{
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  font-size: 24px;
+}

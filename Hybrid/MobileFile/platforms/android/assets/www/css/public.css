@@ -1,0 +1,63 @@
+@charset "UTF-8";
+/* *********导航栏*/
+.head {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 64px;
+  line-height: 64px; }
+
+/*命名规范笔记,笔记:内容会把父节点撑大,如果没有对父节点设置大小*/
+.headSkin {
+  background: orange;
+  color: white;
+  text-align: center;
+  font-size: large; }
+
+.bar-left-item {
+  position: absolute;
+  left: 0;
+  width: 70px;
+  text-align: center; }
+
+/*笔记:只需要对before 只能设置字体大小,父容器设置盒子大小,让其居中,设置LineHeight和高度一样高*/
+.bar-left-item-skin:before {
+  font-size: 30px;
+  color: white; }
+
+.bar-left-item:before:active {
+  color: lightgray; }
+
+.middle-title {
+  position: relative;
+  display: inline-block;
+  line-height: 64px;
+  height: 64px;
+  text-align: center;
+  margin: 0;
+  width: 100%; }
+
+.middle-title-skin {
+  font-size: 22px;
+  color: white; }
+
+.bar-right-item {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 64px;
+  line-height: 64px;
+  width: 80px; }
+
+.bar-right-item-skin {
+  font-size: 18px;
+  text-align: center;
+  color: white; }
+
+.bar-right-item-skin:active {
+  color: lightgray; }
+
+/*-----------*/
+
+/*# sourceMappingURL=public.css.map */
