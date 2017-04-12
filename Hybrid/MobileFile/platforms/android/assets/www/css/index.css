@@ -39,7 +39,8 @@ html, body {
   bottom: 0; }
 
 .contentSkin {
-  background: blanchedalmond; }
+  background: blanchedalmond;
+  overflow: hidden; }
 
 .nav {
   position: absolute;

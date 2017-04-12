@@ -234,56 +234,69 @@ function ready() {
             movingFilesToSafeBox: function () {
                 var entries = loadApp.dataInit.getChosedEntries();
                 if (entries.length > 0){
-                    htmlUtil.showNotifyView('正在移动文件...');
+                    // htmlUtil.showNotifyView('正在移动文件...');
+                    htmlUtil.showProcessView('移动文件中...');
                 }
                 //移动到宝箱
-                entries.forEach(function (item, index) {
-                    var mimeTypeData = fileDealer.getMiMeType(item.name);
-                    if (mimeTypeData == undefined) {
-                        htmlUtil.showNotifyView("暂时不支持此类型文件!");
-                        return;
-                    }
-                    fileDealer.moveToSandBoxDataDirectory(item, fileDealer.localFileSystemCreateName.safeBox, function (newEntry) {
-                        //压缩文件
-                        var PathToResultZip = cordova.file.dataDirectory + fileDealer.localFileSystemCreateName.safeBox + "/";
-                        var PathToFileInString = PathToResultZip + newEntry.name;
+                var movingAllEntries = function () {
+                    if (entries.length == 0){
+                        //刷新列表
+                        var currentEntry = $('.currentPath').data("currentEntry");
+                        fileDealer.openEntry(currentEntry, function (entries) {
+                            htmlDealer.createFileList(entries, currentEntry);
+                            loadApp.dataInit.addCheckEvent();
+                            loadApp.dataInit.createFileOpertorMoveIn();
+                            htmlUtil.disMissProcessView();
+                            setTimeout(htmlUtil.showNotifyView('已移入保险箱'),400);
 
-                        JJzip.zip(PathToFileInString, {
-                            target: PathToResultZip,
-                            name: newEntry.name
-                        }, function (data) {
-                            var fileInfoData = {};
-                            fileInfoData[keyFilePath] = newEntry.nativeURL + ".zip";
-                            fileInfoData[keyFileMIMEType] = mimeTypeData.mimeType;
-                            fileInfoData[keyFileType] = mimeTypeData.type;
-                            fileInfoData[keyFileImage] = mimeTypeData.imageName;
-                            fileInfoData[keyFileName] = newEntry.name;
-                            var originpath = stringDealer.stringByRepalce(item.nativeURL, "/" + item.name, "");
-                            fileInfoData[keyFileOriginPath] = originpath;
-                            //写入数据库
-                            locaDBManager.savePermanentData(locaDBManager.tableNames.SafeBoxFileInfo, fileInfoData, keyFileName);
-                            if (newEntry.isFile) {
-                                newEntry.remove(function () {
-                                    console.log('压缩后,删除成功');
-                                }, function () {
-                                    console.log("压缩后,删除失败");
-                                });
-                            }
-                            //刷新列表
-                            var currentEntry = $('.currentPath').data("currentEntry");
-                            fileDealer.openEntry(currentEntry, function (entries) {
-                                htmlDealer.createFileList(entries, currentEntry);
-                                loadApp.dataInit.addCheckEvent();
-                                loadApp.dataInit.createFileOpertorMoveIn();
-                            });
-                            htmlUtil.showNotifyView('已移入保险箱');
-                            /* Wow everiting goes good, but just in case verify data.success*/
-                        }, function (error) {
-                            /* Wow something goes wrong, check the error.message */
-                            console.log(error);
                         });
-                    });
-                });
+                    }else {
+                        var item = entries.pop();
+                        htmlUtil.showProcessFileName(item.name);
+                        var mimeTypeData = fileDealer.getMiMeType(item.name);
+                        if (mimeTypeData == undefined) {
+                            htmlUtil.showNotifyView("暂时不支持"+item.type+"类型文件!");
+                            movingAllEntries();
+                            return;
+                        }
+                        fileDealer.moveToSandBoxDataDirectory(item, fileDealer.localFileSystemCreateName.safeBox, function (newEntry) {
+                            //压缩文件
+                            var PathToResultZip = cordova.file.dataDirectory + fileDealer.localFileSystemCreateName.safeBox + "/";
+                            var PathToFileInString = PathToResultZip + newEntry.name;
+
+                            JJzip.zip(PathToFileInString, {
+                                target: PathToResultZip,
+                                name: newEntry.name
+                            }, function (data) {
+                                var fileInfoData = {};
+                                fileInfoData[keyFilePath] = newEntry.nativeURL + ".zip";
+                                fileInfoData[keyFileMIMEType] = mimeTypeData.mimeType;
+                                fileInfoData[keyFileType] = mimeTypeData.type;
+                                fileInfoData[keyFileImage] = mimeTypeData.imageName;
+                                fileInfoData[keyFileName] = newEntry.name;
+                                var originpath = stringDealer.stringByRepalce(item.nativeURL, "/" + item.name, "");
+                                fileInfoData[keyFileOriginPath] = originpath;
+                                //写入数据库
+                                locaDBManager.savePermanentData(locaDBManager.tableNames.SafeBoxFileInfo, fileInfoData, keyFileName);
+                                if (newEntry.isFile) {
+                                    newEntry.remove(function () {
+                                        console.log('压缩后,删除成功');
+                                    }, function () {
+                                        console.log("压缩后,删除失败");
+                                    });
+                                }
+                                movingAllEntries();
+                                /* Wow everiting goes good, but just in case verify data.success*/
+                            }, function (error) {
+                                /* Wow something goes wrong, check the error.message */
+                                console.log(error);
+                            });
+
+                        });
+                        movingAllEntries();
+                    }
+                };
+                movingAllEntries();
             }
         },
         setupView: function () {

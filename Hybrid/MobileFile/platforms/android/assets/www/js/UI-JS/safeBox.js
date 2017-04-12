@@ -94,16 +94,12 @@ function ready() {
         dataInit: {
             listItemClickFun: function (event) {
                 console.log('clicked');
-                var isSim = device.isVirtual;
                 var fileItem = $(this);
                 var safeData = fileItem.data(keySafeData);
                 var zipedPath = safeData[keyFilePath];
-                var progress = 20;
-                var cssString = progress + '%';
-                $('#opening-process-wrapper').show();
-                $('#opening-percentage').text(cssString);
-                $('#opening-process-line-incresing').css('width', cssString);
-
+                htmlUtil.showProcessView('打开中',safeData[keyFileName],function () {
+                    isCanceledUnzip = true;
+                });
                 //先解压
                 zip.unzip(zipedPath, targetPath, function (code) {
                     if (code == 0) {
@@ -195,7 +191,6 @@ function ready() {
                         var _this = $(this);
                         changeCheckState(_this);
                         event.stopPropagation();
-
                     });
                 }
             },
@@ -259,8 +254,12 @@ function ready() {
                 $('#safe-menu-wrapper').toggleClass('safe-menu-show');
                 //  console.log('点击');
             });
-            //添加点击事件
-            $('.list').unbind('click').on("click", ".listItem", 0, _this.dataInit.listItemClickFun);
+
+            var isSim = device.isVirtual;
+            if(!isSim){
+                //添加点击事件
+                $('.list').unbind('click').on("click", ".listItem", 0, _this.dataInit.listItemClickFun);
+            }
 
             $('#myFile').unbind('click').on('click', function () {
                 backToHome();
@@ -278,6 +277,7 @@ function ready() {
                     htmlUtil.showNotifyView('请选择要删除的文件!');
                 } else {
                     var remove = function (safeData) {
+                        htmlUtil.showProcessFileName(safeData[keyFileName]);
                         fileDealer.deleteFile(safeData[keyFilePath],function (success) {
                             removeingAll();
                         });
@@ -288,6 +288,7 @@ function ready() {
                     var removeingAll = function () {
                         if (selctedDatas.length == 0) {
                             htmlUtil.showNotifyView('删除成功!');
+                            htmlUtil.disMissProcessView();
                             //刷新
                             loadApp.dataInit.getSafeBoxDatas();
                             loadApp.loadResource();
@@ -297,8 +298,8 @@ function ready() {
                         }
                     };
                     removeingAll();
-                }
-                ;
+                    htmlUtil.showProcessView('删除文件中...');
+                };
             });
 
             $('#safe-menu-backup').unbind('click').on('click', function () {
@@ -307,8 +308,9 @@ function ready() {
                     if (selctedDatas.length == 0) {
                         htmlUtil.showNotifyView('请选择要还原的文件!');
                     } else {
-                        htmlUtil.showNotifyView('正在移动文件...');
+                        htmlUtil.showNotifyView('正在还原文件...');
                         var moveTo = function (safeData) {
+                            htmlUtil.showProcessFileName(safeData[keyFileName]);
                             var zipedPath = safeData[keyFilePath];
                             zip.unzip(zipedPath, targetPath, function (code) {
                                     if (code == 0) {
@@ -323,7 +325,7 @@ function ready() {
                                                     locaDBManager.removeDataFromTable(locaDBManager.tableNames.SafeBoxFileInfo, safeData, keyFileName);
                                                     movingAll();
                                                 }, function (error) {
-                                                    console.log('移动失败!');
+                                                    console.log('还原失败!');
                                                 });
                                             });
 
@@ -338,16 +340,18 @@ function ready() {
 
                         var movingAll = function () {
                             if (selctedDatas.length == 0) {
-                                htmlUtil.showNotifyView('移动成功!');
+                                htmlUtil.showNotifyView('还原成功!');
                                 //刷新
                                 loadApp.dataInit.getSafeBoxDatas();
                                 loadApp.loadResource();
+                                htmlUtil.disMissProcessView();
                             } else {
                                 var safeData = selctedDatas.pop();
                                 moveTo(safeData);
                             }
                         };
                         movingAll();
+                        htmlUtil.showProcessView('还原文件中...');
                     };
                 }
             );

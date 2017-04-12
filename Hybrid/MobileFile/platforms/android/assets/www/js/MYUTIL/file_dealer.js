@@ -63,6 +63,7 @@ FileDealer.prototype.openEntry = function (entry, callBack) {
             //笔记
             if (!results.length) {
                 fileDealer.sortFils(entries);
+                // entries.sort();
                 callBack(entries);
             } else {
                 entries = entries.concat(toArray(results));
@@ -97,10 +98,14 @@ FileDealer.prototype.sortFils = function sortEntrise(entries) {
             return 1;
         } else if (!a.isFile && b.isFile) {
             return -1;
-        } else {
-            return a.name < b.name;
+        } else if(a.name.toUpperCase() < b.name.toUpperCase()){
+            return -1;
+        }else  if(a.name.toUpperCase() > b.name.toUpperCase()){
+            return 1;
         }
+        return 0;
     })
+
 };
 
 //写文件

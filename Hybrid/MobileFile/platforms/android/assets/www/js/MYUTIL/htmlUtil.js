@@ -2,10 +2,23 @@
  * Created by linkang on 19/03/2017.
  */
 
+function nonBlockLoop(fns){
+    var d = new Date()
+    while((new Date()) - d < 15){
+        var f = fns.shift()
+        if(!f) return;
+        f()
+    }
+    // setTimeout(function(){nonBlockLoop(fns)}, 0);
+}
+
 
 var htmlUtil = (function () {
     //私有属性,外面无法访问
     var notifyViewHtml = $('<!--提示框--> <div class="notificationView" id="notificationView"> <div class="notificationContent"> <span id="notifyTxt">提示文字</span> </div> </div>');
+
+    var processViewHtml = $('<div class="opening-process-wrapper opening-process-wrapper-skin" id="opening-process-wrapper"> <div class="opening-process-content opening-process-content-skin"> <h3 class="opening-tile opening-tile-skin" id="openingTitle">正在打开</h3> <p class="opening-filename opening-filename-skin" id="opening-filename">文件名</p> <div class="opening-process"> <a class="opening-process-line-background opening-process-line-background-skin"></a> <a class="opening-process-line-incresing opening-process-line-incresing-skin" id="opening-process-line-incresing"></a> </div> <div class="opening-percentage-container "> <a class="opening-percentage opening-percentage-skin" id="opening-percentage">0%</a> <a class="opening-size " id="opening-size">0MB/0MB</a> </div> <a class="opening-cancel-button opening-cancel-button-skin" id="opening-cancel-button">取消</a> </div> </div>');
+
 
     var addNotifyView = function () {
         var notificationViewParent = $('#notificationView').parent();
@@ -16,6 +29,8 @@ var htmlUtil = (function () {
     };
 
     var dismissNotifyView = function () {
+        var fns = []
+        nonBlockLoop(fns);
         var notiycationView = $('#notificationView');
         notiycationView.data("isShow",false);
         notiycationView.removeClass('notificationViewMoveIn').addClass('notificationViewMoveOut');
@@ -32,6 +47,73 @@ var htmlUtil = (function () {
             setTimeout(dismissNotifyView,2000);
             notiycationView.data("isShow",true);
         }
+    };
+
+    var addProcessView = function () {
+        var processViewParent = $('#opening-process-wrapper').parent();
+        var body = $('body');
+        if (processViewParent != body){
+            body.append(processViewHtml);
+        }
+    };
+
+    var getRandomInt =  function (min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min;
+    };
+    var size = getRandomInt(200,400);
+    var percentage = 0;
+    var stopIncress = false;
+    var imulatorProcess = function () {
+
+        var incressingPerSecond = function () {
+            percentage += 1;
+            if (percentage == 90) {
+                percentage = 90;
+            }
+            var openedSizeString = size * percentage/100 + "/" + size;
+            var openedPercentage = percentage + '%';
+            $('#opening-percentage').text(openedPercentage);
+            $('#opening-size').text(openedSizeString);
+            $('#opening-process-line-incresing').css('width',openedPercentage);
+            if (!stopIncress){
+                imulatorProcess();
+            }
+        };
+
+        setTimeout(incressingPerSecond,1000);
+    };
+
+    htmlUtil.showProcessView = function (title,filename,cancelCallBack) {
+        addProcessView();
+        if (title != undefined){
+            $('#openingTitle').text(title);
+        }
+        if (filename != undefined){
+            $('#opening-filename').text(filename);
+        }
+        if (cancelCallBack == undefined){
+            $('#opening-cancel-button').hide();
+        }
+        $('#opening-process-wrapper').show();
+        stopIncress = false;
+        imulatorProcess();
+        $('#opening-cancel-button').on('click',function () {
+            htmlUtil.disMissProcessView();
+            cancelCallBack();
+        });
+    };
+
+    htmlUtil.showProcessFileName = function (fileName) {
+        if (fileName != undefined){
+            $('#opening-filename').text(fileName);
+        }
+    };
+
+    htmlUtil.disMissProcessView = function () {
+        stopIncress = true;
+        $('#opening-process-wrapper').hide();
     };
 
     return htmlUtil;

@@ -151,11 +151,7 @@ var locaDBManager =  (function () {
         if (checkData(tableName)){
             me.createTable(tableName);
             var  permanentCollection = me.tableCollections[tableName];
-            var total = permanentCollection.count();
-            for (var i = 1; i <= total;i++){
-               var data = permanentCollection.get(i);
-                allDataArray.push(data);
-            }
+            Array.prototype.push.apply(allDataArray,permanentCollection.data);
         }
         return allDataArray;
     };
