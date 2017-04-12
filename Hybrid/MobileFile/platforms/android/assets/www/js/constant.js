@@ -24,3 +24,16 @@ var keyID = "id";
 
 /**取保存在html中险箱数据的key*/
 var keySafeData = "keySafeData";
+
+/**创建密保问题的类型
+ * */
+var questionInputType = {
+    'question':1,
+    "answer":2
+};
+
+
+/**密保存储在本地的key
+ * */
+var keyQuestion = "question";
+var keyAnswer = "answer";

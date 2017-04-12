@@ -233,10 +233,7 @@ function ready() {
             },
             movingFilesToSafeBox: function () {
                 var entries = loadApp.dataInit.getChosedEntries();
-                if (entries.length > 0){
-                    // htmlUtil.showNotifyView('正在移动文件...');
-                    htmlUtil.showProcessView('移动文件中...');
-                }
+
                 //移动到宝箱
                 var movingAllEntries = function () {
                     if (entries.length == 0){
@@ -248,7 +245,6 @@ function ready() {
                             loadApp.dataInit.createFileOpertorMoveIn();
                             htmlUtil.disMissProcessView();
                             setTimeout(htmlUtil.showNotifyView('已移入保险箱'),400);
-
                         });
                     }else {
                         var item = entries.pop();
@@ -296,7 +292,11 @@ function ready() {
                         movingAllEntries();
                     }
                 };
-                movingAllEntries();
+                if (entries.length > 0){
+                    // htmlUtil.showNotifyView('正在移动文件...');
+                    htmlUtil.showProcessView('移动文件中...');
+                    movingAllEntries();
+                }
             }
         },
         setupView: function () {
@@ -410,6 +410,8 @@ function ready() {
                 var entrypacke = {keyData: entries, keyType: fileDealType.MovingFile};
                 locaDBManager.saveData(keyEntries, entrypacke);
                 _this.dataInit.getSelectedItemLable();
+                //保存当前目录
+                loadApp.dataInit.saveCurrentEntry();
                 gotoFileChosePage();
             });
 
@@ -418,6 +420,8 @@ function ready() {
                 var entrypacke = {keyData: entries, keyType: fileDealType.DuplicateFile};
                 locaDBManager.saveData(keyEntries, entrypacke);
                 _this.dataInit.getSelectedItemLable();
+                //保存当前目录
+                loadApp.dataInit.saveCurrentEntry();
                 gotoFileChosePage();
             });
 
@@ -503,6 +507,8 @@ function ready() {
                             fileDealer.openEntry(currentEntry, function (entries) {
                                 htmlDealer.createFileList(entries, currentEntry);
                                 htmlDealer.scrollToCell(createEntry);
+                                _this.dataInit.addCheckEvent();
+                                loadApp.dataInit.createFileOpertorMoveIn();
                             });
                             $('#dialogView').hide();
                         }, function (error) {
