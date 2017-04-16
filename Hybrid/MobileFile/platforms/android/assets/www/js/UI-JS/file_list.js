@@ -217,7 +217,7 @@ function ready() {
             });
 
             //添加点击事件
-            $('.list').on("click", ".listItem", 0, _this.dataInit.listItemClickFun);
+            $('.list').unbind('click').on("click", ".listItem", 0, _this.dataInit.listItemClickFun);
 
             //返回按钮
             $('#bar-left-itemoneID').on('click', function () {

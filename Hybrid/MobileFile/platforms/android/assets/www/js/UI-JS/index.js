@@ -161,11 +161,13 @@ function ready() {
                             $('.list').off('click', '.listItem', loadApp.dataInit.listItemClickFun);
                         }else {
                             loadApp.dataInit.createFileOpertorMoveIn();
+                            $('.list').off('click', '.listItem', loadApp.dataInit.listItemClickFun);
                             $('.list').on('click', '.listItem', loadApp.dataInit.listItemClickFun);
                         }
                     });
                 }else {
                     loadApp.dataInit.createFileOpertorMoveIn();
+                    $('.list').off('click', '.listItem', loadApp.dataInit.listItemClickFun);
                     $('.list').on('click', '.listItem', loadApp.dataInit.listItemClickFun);
                 }
 
@@ -222,6 +224,7 @@ function ready() {
                                 }, false);
                             });
                         } else {
+                            $('.list').off('click', '.listItem', _this.listItemClickFun);
                             $('.list').on('click', '.listItem', _this.listItemClickFun);
                         }
                         _this.createFileOpertorMoveIn();
@@ -377,7 +380,7 @@ function ready() {
         bindEvents: function () {
             var _this = this;
 
-            $('.upper').on("click", function () {
+            $('.upper').unbind('click').on("click", function () {
                 var currentEntry = $('.currentPath').data("currentEntry");
                 currentEntry.getParent(function (parentEntry) {
                     fileDealer.openEntry(parentEntry, function (entries) {
@@ -393,17 +396,17 @@ function ready() {
 
 
             //添加点击事件
-            $('.list').on("click", ".listItem", 0, _this.dataInit.listItemClickFun);
+            $('.list').unbind('click').on("click", ".listItem", 0, _this.dataInit.listItemClickFun);
 
 
             /***
              * 底部操作栏
              * */
-            $('#createFile').on('click', function () {
+            $('#createFile').unbind('click').on('click', function () {
                 $('#dialogView').show();
             });
 
-            $('#safeBox').on('click', function () {
+            $('#safeBox').unbind('click').on('click', function () {
                 loadApp.dataInit.saveCurrentEntry();
                 locaDBManager.saveData(keyPassWordFinishPage, 'safeBox.html');
                 window.plugins.nativepagetransitions.fade({
@@ -431,7 +434,7 @@ function ready() {
                 );
             };
 
-            $('#moveFile').on('click', function () {
+            $('#moveFile').unbind('click').on('click', function () {
                 var entries = loadApp.dataInit.getChosedEntries();
                 var entrypacke = {keyData: entries, keyType: fileDealType.MovingFile};
                 locaDBManager.saveData(keyEntries, entrypacke);
@@ -441,7 +444,7 @@ function ready() {
                 gotoFileChosePage();
             });
 
-            $('#duplicateFile').on('click', function () {
+            $('#duplicateFile').unbind('click').on('click', function () {
                 var entries = loadApp.dataInit.getChosedEntries();
                 var entrypacke = {keyData: entries, keyType: fileDealType.DuplicateFile};
                 locaDBManager.saveData(keyEntries, entrypacke);
@@ -451,11 +454,11 @@ function ready() {
                 gotoFileChosePage();
             });
 
-            $('#deleteFile').on('click', function () {
+            $('#deleteFile').unbind('click').on('click', function () {
                 $('#operatorConsult').addClass('operator-consult-up');
             });
 
-            $('#moveToSafeBox').on('click', function () {
+            $('#moveToSafeBox').unbind('click').on('click', function () {
                 //保存当前目录
                 loadApp.dataInit.saveCurrentEntry();
                 //检查是否有密码
@@ -482,7 +485,7 @@ function ready() {
                     });
             });
 
-            $('#operator-confirm').on('click', function () {
+            $('#operator-confirm').unbind('click').on('click', function () {
                 var success = true;
 
                 var removeSuccess = function () {
@@ -517,14 +520,14 @@ function ready() {
                 $('#operatorConsult').removeClass('operator-consult-up');
             });
 
-            $('#operator-cancel').on('click', function () {
+            $('#operator-cancel').unbind('click').on('click', function () {
                 $('#operatorConsult').removeClass('operator-consult-up');
             });
 
             /***
              * 创建文件弹出对话框
              * */
-            $('#confirmButton').on('click', function () {
+            $('#confirmButton').unbind('click').on('click', function () {
                 var currentEntry = $('.currentPath').data("currentEntry");
                 var fileName = $('#fileName').val();
                 if (fileName.length > 0) {
@@ -546,7 +549,7 @@ function ready() {
                 }
             });
 
-            $('#cancelButton').on('click', function () {
+            $('#cancelButton').unbind('click').on('click', function () {
                 $('#dialogView').hide();
             });
 
