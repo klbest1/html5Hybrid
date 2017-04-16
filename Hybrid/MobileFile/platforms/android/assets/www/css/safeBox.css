@@ -39,7 +39,8 @@ html, body {
   bottom: 0; }
 
 .contentSkin {
-  background: blanchedalmond; }
+  background: blanchedalmond;
+  overflow: hidden; }
 
 .nav {
   position: absolute;
@@ -370,6 +371,10 @@ body {
 
 .video {
   background: url("../img/video.png") no-repeat center;
+  background-size: 10rem; }
+
+.excel {
+  background: url("../img/excel.png") no-repeat center;
   background-size: 10rem; }
 
 .safe-menu-wrapper {

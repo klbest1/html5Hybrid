@@ -13,6 +13,7 @@ function FileDealer() {
         video: "video",
         image: "image",
         office:"office",
+        excel:"excel",
         ppt:'ppt',
         pdf: 'pdf'
     };
@@ -298,11 +299,21 @@ FileDealer.prototype.getMiMeType = function (fileName) {
     // application/vnd.openxmlformats-officedocument.wordprocessingml.document	docx
     forMate.docx = {
         mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        type: "office",
-        imageName: "office"
+        type: _this.safeBoxFileType.office,
+        imageName: _this.safeBoxFileType.office
     };
     //application/vnd.ms-works			wps wks wcm wdb
     forMate.wps = {mimeType: "application/vnd.ms-works", type: _this.safeBoxFileType.office, imageName: _this.safeBoxFileType.office};
+
+    // application/vnd.ms-excel			xls xlm xla xlc xlt xlw
+    forMate.xls = {mimeType: "application/vnd.ms-excel", type: _this.safeBoxFileType.excel, imageName: _this.safeBoxFileType.excel};
+    forMate.xlm = {mimeType: "application/vnd.ms-excel", type: _this.safeBoxFileType.excel, imageName: _this.safeBoxFileType.excel};
+    forMate.xla = {mimeType: "application/vnd.ms-excel", type: _this.safeBoxFileType.excel, imageName: _this.safeBoxFileType.excel};
+    forMate.xlc = {mimeType: "application/vnd.ms-excel", type: _this.safeBoxFileType.excel, imageName: _this.safeBoxFileType.excel};
+    forMate.xlt = {mimeType: "application/vnd.ms-excel", type: _this.safeBoxFileType.excel, imageName: _this.safeBoxFileType.excel};
+
+    // application/vnd.openxmlformats-officedocument.spreadsheetml.sheet	xlsx
+    forMate.xlsx = {mimeType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", type: _this.safeBoxFileType.excel, imageName: _this.safeBoxFileType.excel};
 
     //application/vnd.ms-powerpoint			ppt pps pot
     forMate.ppt = {mimeType: "application/vnd.ms-powerpoint", type: _this.safeBoxFileType.ppt, imageName: _this.safeBoxFileType.ppt};

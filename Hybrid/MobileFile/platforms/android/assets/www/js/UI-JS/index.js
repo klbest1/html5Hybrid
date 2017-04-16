@@ -16,6 +16,24 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
+/**
+ * 用到的技术支持文章:
+ * https://www.html5rocks.com/en/tutorials/file/filesystem/
+ //笔记
+ https://code.google.com/archive/p/crypto-js/downloads
+ https://www.npmjs.com/package/crypto-js
+
+ https://www.npmjs.com/package/cordova-plugin-zip
+ https://github.com/pwlin/cordova-plugin-file-opener2
+ 文件排序，文件权限自动打开。
+ 找回密码功能！。
+ https://developer.android.com/training/permissions/requesting.html
+
+
+ http://www.semorn.com/listen/aiqingfm
+ *
+ * ***/
 var indexApp = {
     // Application Constructor
     initialize: function () {
@@ -98,10 +116,11 @@ function ready() {
                         fileDealer.openEntry(entry, function (entries) {
                             htmlDealer.createFileList(entries, entry)
                             loadApp.dataInit.addCheckEvent();
+                            loadApp.dataInit.recoverSelected();
                         });
                     } else {
                         //打开文件
-                        var mimeTypeData = fileDealer.getMiMeType(entry.name);
+                        var mimeTypeData = fileDealer.getMiMeType(entry.name.toLowerCase());
                         var openPath = decodeURIComponent(entry.nativeURL);
                         if (mimeTypeData.mimeType != undefined) {
                             cordova.plugins.fileOpener2.open(
@@ -109,6 +128,7 @@ function ready() {
                                 mimeTypeData.mimeType,
                                 {
                                     error: function (e) {
+                                        htmlUtil.showNotifyView("没有能打开此文件的APP!");
                                         console.log('Error status: ' + e.status + ' - Error message: ' + e.message);
                                     },
                                     success: function () {
@@ -137,10 +157,16 @@ function ready() {
                         locaDBManager.emptyDataForKey(keySelectedBox);
                         if (checkedItemLabels.length > 0) {
                             //操作栏切换动画
-                            $('#operatorCreateFile').removeClass('operatorMoveIn').addClass('operatorMoveOut');
-                            $('#operatorEdit').removeClass('operatorMoveOut').addClass('operatorMoveIn');
+                            loadApp.dataInit.editFileOperatorMoveIn();
+                            $('.list').off('click', '.listItem', loadApp.dataInit.listItemClickFun);
+                        }else {
+                            loadApp.dataInit.createFileOpertorMoveIn();
+                            $('.list').on('click', '.listItem', loadApp.dataInit.listItemClickFun);
                         }
                     });
+                }else {
+                    loadApp.dataInit.createFileOpertorMoveIn();
+                    $('.list').on('click', '.listItem', loadApp.dataInit.listItemClickFun);
                 }
 
             },
@@ -242,16 +268,16 @@ function ready() {
                         fileDealer.openEntry(currentEntry, function (entries) {
                             htmlDealer.createFileList(entries, currentEntry);
                             loadApp.dataInit.addCheckEvent();
-                            loadApp.dataInit.createFileOpertorMoveIn();
+                            loadApp.dataInit.recoverSelected();
                             htmlUtil.disMissProcessView();
                             setTimeout(htmlUtil.showNotifyView('已移入保险箱'),400);
                         });
                     }else {
                         var item = entries.pop();
                         htmlUtil.showProcessFileName(item.name);
-                        var mimeTypeData = fileDealer.getMiMeType(item.name);
+                        var mimeTypeData = fileDealer.getMiMeType(item.name.toLowerCase());
                         if (mimeTypeData == undefined) {
-                            htmlUtil.showNotifyView("暂时不支持"+item.type+"类型文件!");
+                            htmlUtil.showNotifyView("暂时不支持"+item.name+"类型文件!");
                             movingAllEntries();
                             return;
                         }
@@ -289,7 +315,6 @@ function ready() {
                             });
 
                         });
-                        movingAllEntries();
                     }
                 };
                 if (entries.length > 0){
@@ -358,6 +383,7 @@ function ready() {
                     fileDealer.openEntry(parentEntry, function (entries) {
                         htmlDealer.createFileList(entries, parentEntry);
                         _this.dataInit.addCheckEvent();
+                        _this.dataInit.recoverSelected();
                         htmlDealer.scrollToCell(currentEntry);
                     });
                 }, function (error) {
@@ -483,6 +509,8 @@ function ready() {
                     var currentEntry = $('.currentPath').data("currentEntry");
                     fileDealer.openEntry(currentEntry, function (entries) {
                         htmlDealer.createFileList(entries, currentEntry);
+                        _this.dataInit.addCheckEvent();
+                        _this.dataInit.recoverSelected();
                     });
                 }
 
@@ -507,8 +535,8 @@ function ready() {
                             fileDealer.openEntry(currentEntry, function (entries) {
                                 htmlDealer.createFileList(entries, currentEntry);
                                 htmlDealer.scrollToCell(createEntry);
-                                _this.dataInit.addCheckEvent();
-                                loadApp.dataInit.createFileOpertorMoveIn();
+                                loadApp.dataInit.addCheckEvent();
+                                loadApp.dataInit.recoverSelected();
                             });
                             $('#dialogView').hide();
                         }, function (error) {

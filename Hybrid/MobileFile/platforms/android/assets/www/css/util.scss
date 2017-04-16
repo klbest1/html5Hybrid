@@ -35,6 +35,7 @@ $notifiViewHight: 44px;
   animation: movOut 0.3s;
   display: block;
   top: -$notifiViewHight;
+  overflow: hidden;
 }
 
 @keyframes movIn {

@@ -29,8 +29,6 @@ var htmlUtil = (function () {
     };
 
     var dismissNotifyView = function () {
-        var fns = []
-        nonBlockLoop(fns);
         var notiycationView = $('#notificationView');
         notiycationView.data("isShow",false);
         notiycationView.removeClass('notificationViewMoveIn').addClass('notificationViewMoveOut');
@@ -62,17 +60,24 @@ var htmlUtil = (function () {
         max = Math.floor(max);
         return Math.floor(Math.random() * (max - min)) + min;
     };
-    var size = getRandomInt(200,400);
+    var size = 0;
     var percentage = 0;
     var stopIncress = false;
+
+    var initSizeAndPercentage = function () {
+        size = getRandomInt(200,400);
+        percentage = 0;
+        stopIncress = false;
+    };
+
     var imulatorProcess = function () {
 
         var incressingPerSecond = function () {
             percentage += 1;
-            if (percentage == 90) {
+            if (percentage >= 90) {
                 percentage = 90;
             }
-            var openedSizeString = size * percentage/100 + "/" + size;
+            var openedSizeString = size * percentage/100 +"MB"+ "/" + size + "MB";
             var openedPercentage = percentage + '%';
             $('#opening-percentage').text(openedPercentage);
             $('#opening-size').text(openedSizeString);
@@ -97,7 +102,7 @@ var htmlUtil = (function () {
             $('#opening-cancel-button').hide();
         }
         $('#opening-process-wrapper').show();
-        stopIncress = false;
+        initSizeAndPercentage();
         imulatorProcess();
         $('#opening-cancel-button').on('click',function () {
             htmlUtil.disMissProcessView();

@@ -27,7 +27,8 @@
 .notificationViewMoveOut {
   animation: movOut 0.3s;
   display: block;
-  top: -44px; }
+  top: -44px;
+  overflow: hidden; }
 
 @keyframes movIn {
   0% {

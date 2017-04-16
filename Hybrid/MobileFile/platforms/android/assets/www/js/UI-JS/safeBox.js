@@ -114,6 +114,7 @@ function ready() {
                                 safeData[keyFileMIMEType],
                                 {
                                     error: function (e) {
+                                        htmlUtil.showNotifyView("没有能打开此文件的APP");
                                         console.log('Error status: ' + e.status + ' - Error message: ' + e.message);
                                     },
                                     success: function () {
@@ -145,14 +146,8 @@ function ready() {
                 var _this = this;
                 var isSim = device.isVirtual;
 
-                var clearOtherCheckBoxes = function () {
-                    $('.icon-ok-squared').each(function (index, elem) {
-                        $(elem).removeClass('icon-ok-squared').addClass('icon-check-empty');
-                    });
-                };
                 var changeCheckState = function (checkEle) {
                     if (checkEle.hasClass('icon-check-empty')) {
-                        clearOtherCheckBoxes();
                         checkEle.removeClass('icon-check-empty').addClass('icon-ok-squared');
                     } else {
                         checkEle.removeClass('icon-ok-squared').addClass('icon-check-empty');
@@ -209,7 +204,7 @@ function ready() {
                 scrollY: true,
                 // scrollX: true,
                 momentum: false,
-                snap: true,
+                snap: false
             });
             document.addEventListener('touchmove', function (e) {
                 e.preventDefault();
@@ -297,9 +292,9 @@ function ready() {
                             remove(safeData);
                         }
                     };
-                    removeingAll();
                     htmlUtil.showProcessView('删除文件中...');
-                };
+                    removeingAll();
+                }
             });
 
             $('#safe-menu-backup').unbind('click').on('click', function () {
@@ -350,9 +345,9 @@ function ready() {
                                 moveTo(safeData);
                             }
                         };
-                        movingAll();
                         htmlUtil.showProcessView('还原文件中...');
-                    };
+                        movingAll();
+                    }
                 }
             );
         },

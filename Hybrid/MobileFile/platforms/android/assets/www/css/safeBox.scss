@@ -120,7 +120,10 @@ body {
   background-size: $iconWidth;
 }
 
-
+.excel{
+  background: url("../img/excel.png") no-repeat center;
+  background-size: $iconWidth;
+}
 
 .safe-menu-wrapper{
   position: absolute;

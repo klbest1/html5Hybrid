@@ -77,7 +77,7 @@ function ready() {
                     var fileItem = $(this);
                     var entry = fileItem.data("entry");
                     fileDealer.openEntry(entry, function (entries) {
-                        htmlDealer.createFileList(entries, entry)
+                        htmlDealer.createFileList(entries, entry,true);
                         loadApp.dataInit.addCheckEvent();
                     });
                 }
@@ -181,8 +181,7 @@ function ready() {
             fileDealer.openSDCard(function (entries, rootEntry) {
                 sdCardRootEntry = rootEntry;
                 htmlDealer.myscrollView = loadApp.myScroll;
-                htmlDealer.createFileList(entries, rootEntry);
-                loadApp.myScroll.refresh();
+                htmlDealer.createFileList(entries, rootEntry,true);
                 _this.dataInit.addCheckEvent();
                 _this.dataInit.getEntryPackages();
             });
@@ -208,7 +207,7 @@ function ready() {
                 var currentEntry = $('.currentPath').data("currentEntry");
                 currentEntry.getParent(function (parentEntry) {
                     fileDealer.openEntry(parentEntry, function (entries) {
-                        htmlDealer.createFileList(entries, parentEntry);
+                        htmlDealer.createFileList(entries, parentEntry,true);
                         _this.dataInit.addCheckEvent();
                         htmlDealer.scrollToCell(currentEntry);
                     });
@@ -229,7 +228,7 @@ function ready() {
             $('#bar-right-itemoneID').on('click', function () {
                 var destination = $('.icon-ok-squared').parent('.listItem').data('entry');
                 if (destination == null || destination == undefined) {
-                    htmlUtil.showNotifyView('请选择文件!');
+                    htmlUtil.showNotifyView('请选择要移动的目录!');
                     return;
                 }
 
@@ -238,7 +237,9 @@ function ready() {
                 if (type == fileDealType.MovingFile) {
 
                     var moveFile = function (entry) {
+                        htmlUtil.showProcessFileName(entry.name);
                         entry.moveTo(destination, null, function (newEntry) {
+                            moveAll();
                         }, function (error) {
                             htmlUtil.showNotifyView(error);
                         });
@@ -246,22 +247,24 @@ function ready() {
 
                     var moveAll = function () {
                         if (chosedEntries.length == 0) {
+                            locaDBManager.emptyDataForKey(keySelectedBox);
+                            htmlUtil.disMissProcessView();
                             backToHome(function () {
                                 htmlUtil.showNotifyView('移动成功!');
                             });
                         } else {
                             var entry = chosedEntries.pop();
                             moveFile(entry);
-                            moveAll();
                         }
                     };
-
+                    htmlUtil.showProcessView("删除文件中...");
                     moveAll();
 
                 } else if (type == fileDealType.DuplicateFile) {
                     var copyFile = function (entry) {
+                        htmlUtil.showProcessFileName(entry.name);
                         entry.copyTo(destination, null, function (newEntry) {
-
+                            copyAll();
                         }, function (error) {
                             htmlUtil.showNotifyView(error);
                         });
@@ -269,16 +272,17 @@ function ready() {
 
                     var copyAll = function () {
                         if (chosedEntries.length == 0) {
+                            htmlUtil.disMissProcessView();
                             backToHome(function () {
                                 htmlUtil.showNotifyView('拷贝成功!');
                             });
                         } else {
                             var entry = chosedEntries.pop();
                             copyFile(entry);
-                            copyAll();
                         }
                     };
 
+                    htmlUtil.showProcessView("拷贝文件中...");
                     copyAll();
                 }
 

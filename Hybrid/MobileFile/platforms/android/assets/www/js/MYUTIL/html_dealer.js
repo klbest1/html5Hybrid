@@ -20,10 +20,14 @@ var animation = (function () {
 
 HtmlDealer.prototype = {
 
-    createFileListItem: function (entry) {
+    createFileListItem: function (entry,hideFile) {
         //笔记 ,用类克隆,又没有移除类,导致clone太多了....超出堆栈了....
         // var listItem = $('.listItem').clone()
         //笔记参数不带 点!!
+        //隐藏文件类型,因为这里是选择文件目录
+        if (entry.isFile && hideFile){
+            return;
+        }
         var listItem = $('.templete').clone().removeClass('templete').addClass('listItem').addClass('listItemSkin');
         if (entry.isDirectory) {
             listItem.find('.icon').addClass('directory');
@@ -35,7 +39,7 @@ HtmlDealer.prototype = {
 
         return listItem;
     },
-    createFileList: function (entries, rootEntry) {
+    createFileList: function (entries, rootEntry,hideFile) {
         //当前目录
         if (rootEntry != undefined && rootEntry != null) {
             $('.currentPath span').text(rootEntry.name)
@@ -47,18 +51,20 @@ HtmlDealer.prototype = {
         var isSim = device.isVirtual;
         for (var i = 0; i < entries.length; i++) {
             var entry = entries[i];
-            var listItem = htmlDealer.createFileListItem(entry);
-            listItem.data("entry", entry);
-            //为每个元素设置id
-            var idName = pinyin.getFullChars(entry.name);
-            listItem.attr('id', idName);
-            //模拟器添加绑定事件,因为无法获取点击事件
-            
-            if (isSim) {
-                attachMyEvent(listItem, function (event) {
-                    var fileItem = $(this);
-                   htmlDealer.gotoNextDirectory(fileItem);
-                }, false);
+            var listItem = htmlDealer.createFileListItem(entry,hideFile);
+            if(listItem != undefined){
+                listItem.data("entry", entry);
+                //为每个元素设置id
+                var idName = pinyin.getFullChars(entry.name);
+                listItem.attr('id', idName);
+                //模拟器添加绑定事件,因为无法获取点击事件
+
+                if (isSim) {
+                    attachMyEvent(listItem, function (event) {
+                        var fileItem = $(this);
+                        htmlDealer.gotoNextDirectory(fileItem);
+                    }, false);
+                }
             }
         }
         this.myscrollView.refresh();
@@ -101,7 +107,7 @@ HtmlDealer.prototype = {
         var idName = "#" + pinyin.getFullChars(entry.name);
         var listItem = document.querySelector(idName);
         animation.blink($(listItem));
-        this.myscrollView.scrollToElement(listItem, null, null, false)
+        this.myscrollView.scrollToElement(listItem, 0.3, null, false)
     },
     gotoNextDirectory:function (fileItem) {
         var entry = fileItem.data("entry");
@@ -112,7 +118,7 @@ HtmlDealer.prototype = {
             });
         }else {
             //打开文件
-            var mimeTypeData = fileDealer.getMiMeType(entry.name);
+            var mimeTypeData = fileDealer.getMiMeType(entry.name.toLowerCase());
             var openPath = decodeURIComponent(entry.nativeURL);
             if(mimeTypeData.mimeType != undefined){
                 cordova.plugins.fileOpener2.open(
@@ -120,6 +126,7 @@ HtmlDealer.prototype = {
                     mimeTypeData.mimeType,
                     {
                         error: function (e) {
+                            htmlUtil.showNotifyView("没有能打开此文件的APP!");
                             console.log('Error status: ' + e.status + ' - Error message: ' + e.message);
                         },
                         success: function () {
